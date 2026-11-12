@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>수업 진행 (프레젠테이션)</title>
+  <link rel="stylesheet" href="./css/lessons.css?v=7" />
+</head>
+<body class="present-page">
+  <main class="present-main">
+    <div class="present-topbar">
+      <div class="present-toolbar present-actions" role="group" aria-label="수업 진행">
+        <button id="push-btn" type="button" class="present-action is-primary" disabled>모으기</button>
+        <span class="present-action-sep" aria-hidden="true"></span>
+        <span class="present-action-radio" role="group" aria-label="학생 이동 방식">
+          <button id="follow-btn" type="button" class="present-action is-toggle"
+                  aria-pressed="false" disabled>따라오기</button>
+          <button id="range-btn" type="button" class="present-action is-toggle"
+                  aria-pressed="false" disabled>범위</button>
+        </span>
+        <button id="lock-btn" type="button" class="present-action is-toggle"
+                aria-pressed="false" disabled>고정</button>
+        <span class="present-action-sep" aria-hidden="true"></span>
+        <button id="answers-btn" type="button" class="present-action is-toggle is-quiet"
+                aria-pressed="false">정답</button>
+        <button id="progress-btn" type="button" class="present-action is-quiet" disabled>진행 현황</button>
+        <button id="join-btn" type="button" class="present-action is-quiet" disabled>참여 안내</button>
+        <button id="pins-btn" type="button" class="present-action is-quiet" hidden>PIN</button>
+      </div>
+
+      <div class="present-settings">
+        <button id="settings-btn" type="button" class="present-settings-btn" aria-label="설정"
+                title="설정" aria-expanded="false" aria-controls="settings-panel">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+        <div id="settings-panel" class="present-settings-panel" role="dialog" aria-label="설정" hidden>
+          <p id="settings-context" class="present-settings-context"></p>
+          <div class="present-pickers" id="settings-pickers">
+            <label class="present-class-picker">
+              차시
+              <select id="lesson-select"></select>
+            </label>
+            <label class="present-class-picker" id="class-picker">
+              학급
+              <select id="class-select"></select>
+            </label>
+            <label class="present-class-picker" id="track-picker" hidden>
+              미리보기 트랙
+              <select id="track-select">
+                <option value="m1">중학교 1학년 (m1)</option>
+                <option value="m3">중학교 3학년 (m3)</option>
+                <option value="high">고등학교 (high)</option>
+                <option value="gifted">영재학교 (gifted)</option>
+              </select>
+            </label>
+            <label class="present-class-picker" id="scenario-picker" hidden>
+              시나리오
+              <select id="scenario-select">
+                <option value="full">정규 차시</option>
+                <option value="exp2">실험수업 (2차시)</option>
+              </select>
+            </label>
+          </div>
+          <div class="present-settings-reveals" id="reveals-tools" hidden>
+            <p class="present-settings-note" id="reveals-note"></p>
+            <button id="reveals-clear-btn" type="button">켜진 공개 모두 끄기</button>
+          </div>
+          <nav class="present-settings-links" aria-label="다른 화면">
+            <a href="./present.html">학급 선택으로</a>
+            <a href="./index.html">차시 목록</a>
+            <a href="../teacher.html">교사 대시보드</a>
+          </nav>
+          <div class="user-strip present-settings-user">
+            <span id="current-user"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h1 class="lesson-title" hidden></h1>
+    <p class="lesson-topic" hidden></p>
+
+    <div id="guide-host" hidden></div>
+
+    <div class="present-layout" id="present-layout">
+      <nav class="present-card-pane" id="card-pane" aria-label="카드 진행바">
+        <div class="present-pane-head">
+          <span class="present-pane-title">카드 진행바</span>
+          <button id="nav-toggle" type="button" class="present-pane-toggle" aria-expanded="true"
+                  aria-controls="card-list" title="진행바 접기">◀</button>
+        </div>
+        <p class="present-pane-hint">카드 왼쪽의 선택 칸을 눌러 학습 범위에 넣을 카드를 고르고, 위의 ‘범위’를 누르세요.</p>
+        <div id="card-list" class="present-card-list"></div>
+      </nav>
+      <div id="deck" class="present-deck"></div>
+      <aside id="board-host" class="present-board-host"></aside>
+    </div>
+  </main>
+  <div id="toast" hidden></div>
+
+  <script src="./js/state.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/kit/toast.js"></script>
+  <script src="./js/kit/settings_menu.js"></script>
+  <script src="./js/kit/icons.js"></script>
+  <script src="./js/kit/chart.js"></script>
+  <script src="./js/kit/explain.js"></script>
+  <script src="./js/kit/sheet.js"></script>
+  <script src="./js/kit/analysis.js"></script>
+  <script src="./js/kit/state.js"></script>
+  <script src="./js/kit/realtime.js"></script>
+  <script src="./js/kit/discuss.js"></script>
+  <script src="./js/kit/diag.js"></script>
+  <script src="./js/kit/evidence.js"></script>
+  <script src="./js/kit/connector.js"></script>
+  <script src="./js/kit/categorize.js"></script>
+  <script src="./js/kit/career.js"></script>
+  <script src="./js/kit/dataset_acquire.js"></script>
+  <script src="./js/kit/inquiry.js"></script>
+  <script src="./js/kit/flexible_analysis.js"></script>
+  <script src="./js/kit/presentation.js"></script>
+  <script src="./js/kit/renderers.js"></script>
+  <script src="./js/kit/deck.js"></script>
+  <script src="./vendor/qrcode/qrcode.js"></script>
+  <script src="./js/kit/pin.js"></script>
+  <script src="./js/kit/board_progress.js"></script>
+  <script src="./js/kit/join.js"></script>
+  <script src="./js/present.js"></script>
+</body>
+</html>

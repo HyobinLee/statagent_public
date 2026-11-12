@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>학급/교사/학생 배정 (관리자)</title>
+  <link rel="stylesheet" href="./css/lessons.css?v=7" />
+</head>
+<body>
+  <header class="lesson-header">
+    <a href="./index.html">← 차시 목록</a>
+    <div class="user-strip">
+      <span id="current-user"></span>
+    </div>
+  </header>
+  <main>
+    <h1 class="lesson-title">학급 / 교사 / 학생 배정</h1>
+    <p class="lesson-topic">
+      차시 전용 저장소를 기준으로 계정과 배정을 관리합니다. 주 앱(관리자 대시보드)과는
+      별도로 저장되어 자동으로 동기화되지 않습니다.
+    </p>
+
+    <section class="lesson-step">
+      <div class="lesson-step-badge">학급 목록</div>
+      <div class="lesson-step-body">
+        <div id="classes-container"></div>
+      </div>
+    </section>
+
+    <section class="lesson-step">
+      <div class="lesson-step-badge">학급 배정</div>
+      <div class="lesson-step-body">
+        <p class="lesson-topic-options" style="margin:0 0 0.75rem;">
+          학급 ID, 담당 교사, 배정할 학생을 골라 한 번에 배정합니다.
+        </p>
+        <form id="route-form">
+          <input
+            id="route-class-id"
+            class="lesson-dataset-name-input"
+            type="text"
+            placeholder="학급 ID (예: class-3-1)"
+            required
+          />
+          <select id="route-teacher" class="lesson-dataset-name-input" required>
+            <option value="">담당 교사 선택</option>
+          </select>
+          <div id="route-students" class="lesson-categorize-scroll" style="max-height:220px;"></div>
+          <button type="submit" class="lesson-next primary">선택한 학생 배정</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="lesson-step">
+      <div class="lesson-step-badge">계정 추가</div>
+      <div class="lesson-step-body">
+        <form id="create-user-form">
+          <input id="new-user-email" class="lesson-dataset-name-input" type="email" placeholder="이메일" required />
+          <input
+            id="new-user-name"
+            class="lesson-dataset-name-input"
+            type="text"
+            placeholder="표시 이름"
+            required
+          />
+          <select id="new-user-role" class="lesson-dataset-name-input">
+            <option value="student">학생</option>
+            <option value="teacher">교사</option>
+            <option value="admin">관리자</option>
+          </select>
+          <button type="submit" class="lesson-next primary">계정 만들기</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="lesson-step">
+      <div class="lesson-step-badge">전체 계정</div>
+      <div class="lesson-step-body">
+        <div id="users-container"></div>
+      </div>
+    </section>
+  </main>
+  <div id="toast" hidden></div>
+
+  <script src="./js/state.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/admin.js"></script>
+</body>
+</html>

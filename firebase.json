@@ -1,0 +1,69 @@
+{
+  "hosting": {
+    "public": "frontend",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache, max-age=0"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/lessons",
+        "run": {
+          "serviceId": "stat-agent-lessons-backend",
+          "region": "asia-northeast3"
+        }
+      },
+      {
+        "source": "/lessons/**",
+        "run": {
+          "serviceId": "stat-agent-lessons-backend",
+          "region": "asia-northeast3"
+        }
+      },
+      {
+        "source": "/api/lessons/**",
+        "run": {
+          "serviceId": "stat-agent-lessons-backend",
+          "region": "asia-northeast3"
+        }
+      },
+      {
+        "source": "/api",
+        "run": {
+          "serviceId": "stat-agent-backend",
+          "region": "asia-northeast3"
+        }
+      },
+      {
+        "source": "/api/**",
+        "run": {
+          "serviceId": "stat-agent-backend",
+          "region": "asia-northeast3"
+        }
+      },
+      {
+        "source": "/static/**",
+        "run": {
+          "serviceId": "stat-agent-backend",
+          "region": "asia-northeast3"
+        }
+      }
+    ]
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>차시 진행 현황 (교사)</title>
+  <link rel="stylesheet" href="./css/lessons.css?v=7" />
+</head>
+<body>
+  <header class="lesson-header">
+    <a href="./index.html">← 차시 목록</a>
+    <div class="user-strip">
+      <button id="student-preview-btn" type="button">학생 화면 미리보기</button>
+      <span id="current-user"></span>
+    </div>
+  </header>
+  <main>
+    <h1 class="lesson-title">학생 × 차시 진행 현황</h1>
+    <p class="lesson-topic">
+      담당 학급 학생만 보입니다(관리자는 전체). 차시마다 시작 여부와 함께 불러온 자료 수·제출한
+      응답 수가 표시됩니다. 칸의 <strong>초기화</strong>를 누르면 그 학생의 그 차시만 처음으로
+      되돌립니다.
+    </p>
+    <div id="dashboard-container"></div>
+
+    <section class="teacher-section">
+      <h2 class="lesson-title">발문 응답 내려받기 (CSV)</h2>
+      <p class="lesson-topic">
+        차시별 예측·판별·근거·출구 발문 응답을 CSV로 내려받습니다. 수업 후 평가 증거와 연구
+        원자료 수집 경로입니다. 출구 발문 제출 여부는 위 진행 표의 각 칸에 <strong>출구 ✓</strong>로
+        표시됩니다.
+      </p>
+      <div class="teacher-pin-controls">
+        <label for="csv-lesson-select">차시</label>
+        <select id="csv-lesson-select">
+          <option value="">전체 차시</option>
+          <option value="lesson1">1차시</option>
+          <option value="lesson2">2차시</option>
+          <option value="lesson3">3차시</option>
+          <option value="lesson4">4차시</option>
+          <option value="lesson5">5차시</option>
+          <option value="lesson6">6차시</option>
+          <option value="lesson7">7차시</option>
+        </select>
+        <label for="csv-class-id">학급 (비우면 담당 전체)</label>
+        <input id="csv-class-id" class="lesson-dataset-name-input" type="text" placeholder="예) 3-1" />
+        <button id="csv-download-btn" type="button" class="lesson-connector-fetch">CSV 내려받기</button>
+        <button id="diag-csv-btn" type="button" class="lesson-connector-fetch">진단 응답 CSV (실험수업)</button>
+      </div>
+    </section>
+
+    <section class="teacher-section">
+      <h2 class="lesson-title">PIN 발급 현황</h2>
+      <p class="lesson-topic">
+        학급 전체의 PIN 발급 상태를 한 번에 봅니다. <strong>PIN은 언제든 다시 볼 수 있습니다</strong> —
+        평소에는 가려 두었다가 누르면 그 학생 것만 보이고, 인쇄하면 원문이 찍힙니다.
+        학생이 PIN을 잊었으면 보여 주면 되고, 남이 알게 되었을 때만 재발급하세요.
+      </p>
+      <div class="teacher-pin-controls">
+        <label for="pin-class-id">학급</label>
+        <input id="pin-class-id" class="lesson-dataset-name-input" type="text" placeholder="예) 3-1" />
+        <button id="pin-load-btn" type="button" class="lesson-connector-fetch">발급 현황 보기</button>
+      </div>
+      <div id="pin-container"></div>
+    </section>
+  </main>
+  <div id="toast" hidden></div>
+
+  <script src="./js/state.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/kit/pin.js"></script>
+  <script src="./js/teacher.js"></script>
+</body>
+</html>

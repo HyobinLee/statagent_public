@@ -1,0 +1,170 @@
+[
+  {
+    "field_id": "health",
+    "field_name": "보건·의료",
+    "topics": [
+      {
+        "topic_id": "health_obesity_walking",
+        "question": "시도별 비만율과 걷기 실천율은 어떤 관계가 있을까?",
+        "related_statistics": "지역사회건강조사"
+      },
+      {
+        "topic_id": "health_sleep_by_school",
+        "question": "청소년 수면 시간은 학교급별로 나누면 어떻게 달라질까?",
+        "related_statistics": "청소년건강행태조사"
+      },
+      {
+        "topic_id": "health_doctor_region",
+        "question": "인구 1천 명당 의사 수는 수도권과 비수도권에서 얼마나 다를까?",
+        "related_statistics": "보건의료실태조사"
+      }
+    ]
+  },
+  {
+    "field_id": "education",
+    "field_name": "교육",
+    "topics": [
+      {
+        "topic_id": "education_cost_participation",
+        "question": "사교육 참여율과 1인당 사교육비는 시도별로 어떤 관계일까?",
+        "related_statistics": "초중고사교육비조사"
+      },
+      {
+        "topic_id": "education_class_size_by_school",
+        "question": "학교급별로 나누면 학급당 학생 수의 감소 추세가 다르게 보일까?",
+        "related_statistics": "교육기본통계"
+      },
+      {
+        "topic_id": "education_cost_basis",
+        "question": "전체 학생 기준과 참여 학생 기준의 사교육비 순위는 어떻게 달라질까?",
+        "related_statistics": "초중고사교육비조사"
+      }
+    ]
+  },
+  {
+    "field_id": "environment",
+    "field_name": "환경·기후",
+    "topics": [
+      {
+        "topic_id": "environment_heatwave_region",
+        "question": "폭염일수의 증가 폭은 지역별로 얼마나 다를까?",
+        "related_statistics": "기상관측통계"
+      },
+      {
+        "topic_id": "environment_dust_season",
+        "question": "미세먼지 농도는 계절로 나누면 어떤 패턴이 보일까?",
+        "related_statistics": "대기오염도 통계"
+      },
+      {
+        "topic_id": "environment_heat_tropical",
+        "question": "열대야 일수와 폭염 일수는 함께 움직일까?",
+        "related_statistics": "기상관측통계"
+      }
+    ]
+  },
+  {
+    "field_id": "economy",
+    "field_name": "경제·경영",
+    "topics": [
+      {
+        "topic_id": "economy_income_spending",
+        "question": "지역 소득과 소비 지출은 시도별로 어떤 관계일까?",
+        "related_statistics": "지역소득"
+      },
+      {
+        "topic_id": "economy_inflation_by_item",
+        "question": "품목별로 나누면 물가 상승률은 얼마나 다를까?",
+        "related_statistics": "소비자물가조사(품목별)"
+      },
+      {
+        "topic_id": "economy_single_housing",
+        "question": "1인 가구 비율이 높은 지역은 소형 주택 비중도 높을까?",
+        "related_statistics": "인구주택총조사"
+      }
+    ]
+  },
+  {
+    "field_id": "it",
+    "field_name": "정보·IT",
+    "topics": [
+      {
+        "topic_id": "it_internet_by_age",
+        "question": "연령대별로 나누면 인터넷 이용 시간의 차이가 얼마나 될까?",
+        "related_statistics": "인터넷이용실태조사"
+      },
+      {
+        "topic_id": "it_smartphone_risk",
+        "question": "스마트폰 과의존 위험군 비율은 연령대에 따라 어떻게 다를까?",
+        "related_statistics": "스마트폰 과의존 실태조사"
+      },
+      {
+        "topic_id": "it_online_shopping",
+        "question": "온라인쇼핑 거래액은 상품군별로 어떻게 다르게 늘었을까?",
+        "related_statistics": "온라인쇼핑동향조사"
+      }
+    ]
+  },
+  {
+    "field_id": "welfare",
+    "field_name": "사회복지",
+    "topics": [
+      {
+        "topic_id": "welfare_single_by_age",
+        "question": "1인 가구 비율은 연령대로 나누면 어떤 모양일까?",
+        "related_statistics": "인구주택총조사"
+      },
+      {
+        "topic_id": "welfare_elderly_facility",
+        "question": "노인 인구 비율과 복지시설 수는 지역별로 어떤 관계일까?",
+        "related_statistics": "주민등록 인구통계"
+      },
+      {
+        "topic_id": "welfare_worries_by_group",
+        "question": "청소년이 고민하는 문제는 성별이나 학교급에 따라 다를까?",
+        "related_statistics": "사회조사"
+      }
+    ]
+  },
+  {
+    "field_id": "culture",
+    "field_name": "문화·체육",
+    "topics": [
+      {
+        "topic_id": "culture_leisure_by_day",
+        "question": "여가 시간은 평일과 주말, 연령대에 따라 얼마나 다를까?",
+        "related_statistics": "생활시간조사"
+      },
+      {
+        "topic_id": "culture_exercise_trend",
+        "question": "규칙적 운동 실천율은 연령대별로 어떤 경향일까?",
+        "related_statistics": "국민생활체육조사"
+      },
+      {
+        "topic_id": "culture_library_use",
+        "question": "지역별 공공도서관 수와 이용자 수는 어떤 관계일까?",
+        "related_statistics": "국가도서관통계"
+      }
+    ]
+  },
+  {
+    "field_id": "safety",
+    "field_name": "안전·교통",
+    "topics": [
+      {
+        "topic_id": "safety_death_by_road",
+        "question": "교통사고 사망률은 도로 종류별로 나누면 어떻게 달라질까?",
+        "related_statistics": "교통사고통계"
+      },
+      {
+        "topic_id": "safety_schoolzone_time",
+        "question": "어린이보호구역 사고는 시간대별로 언제 몰릴까?",
+        "related_statistics": "교통사고통계"
+      },
+      {
+        "topic_id": "safety_bicycle_split",
+        "question": "자전거 사고는 계절과 연령대 중 무엇으로 나눠야 더 잘 보일까?",
+        "related_statistics": "교통사고통계"
+      }
+    ]
+  }
+]

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>학생 흐름 | 통계 에이전트</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("stat-theme");
+          var dark = stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+        } catch (error) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="./vendor/gridstack/gridstack.min.css" />
+    <link rel="stylesheet" href="./css/styles.css?v=20260731-04" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./index.html">통계 에이전트</a>
+      <div class="user-strip">
+        <button id="theme-toggle" type="button" data-theme-toggle></button>
+        <span id="current-user"></span>
+      </div>
+    </header>
+
+    <main class="app-shell student-linear-shell">
+      <section class="workspace">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">학생 탐구</p>
+            <h1>탐구 프로젝트</h1>
+          </div>
+          <div class="section-title-actions">
+            <button id="restart-btn">새 프로젝트</button>
+            <button id="project-manage-btn">프로젝트 관리</button>
+            <button id="tutorial-btn" class="tutorial-toggle-btn" hidden>튜토리얼</button>
+          </div>
+        </div>
+        <ol id="progress" class="progress"></ol>
+        <div id="step-controls" class="step-controls"></div>
+        <div id="student-view" class="panel"></div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="./vendor/gridstack/gridstack-all.js"></script>
+    <script src="./js/theme.js?v=20260731-04"></script>
+    <script src="./js/state.js?v=20260731-04"></script>
+    <script src="./js/api.js?v=20260731-04"></script>
+    <script src="./js/auth.js?v=20260731-04"></script>
+    <script src="./js/student.js?v=20260731-04"></script>
+  </body>
+</html>

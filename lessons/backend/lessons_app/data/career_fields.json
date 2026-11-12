@@ -1,0 +1,160 @@
+[
+  {
+    "field_id": "health",
+    "field_name": "보건·의료",
+    "topics": [
+      {
+        "topic_id": "health_death_cause",
+        "question": "우리나라 사망 원인 1위는 어떻게 바뀌어 왔을까?",
+        "related_statistics": "사망원인통계"
+      },
+      {
+        "topic_id": "health_breakfast_skip",
+        "question": "청소년의 아침 결식률은 학년에 따라 어떻게 다를까?",
+        "related_statistics": "청소년건강행태조사"
+      },
+      {
+        "topic_id": "health_doctor_supply",
+        "question": "지역에 따라 의사 수는 얼마나 차이 날까?",
+        "related_statistics": "보건의료실태조사"
+      }
+    ]
+  },
+  {
+    "field_id": "education",
+    "field_name": "교육",
+    "topics": [
+      {
+        "topic_id": "education_private_cost",
+        "question": "사교육비는 지역에 따라 얼마나 다를까?",
+        "related_statistics": "초중고사교육비조사"
+      },
+      {
+        "topic_id": "education_class_size",
+        "question": "학생 수가 줄면 학급당 학생 수도 줄었을까?",
+        "related_statistics": "교육기본통계"
+      },
+      {
+        "topic_id": "education_afterschool",
+        "question": "방과후학교 참여율은 학교급에 따라 어떻게 다를까?",
+        "related_statistics": "교육기본통계"
+      }
+    ]
+  },
+  {
+    "field_id": "environment",
+    "field_name": "환경·기후",
+    "topics": [
+      {
+        "topic_id": "environment_summer_heat",
+        "question": "우리 지역의 여름은 정말 더 더워졌을까?",
+        "related_statistics": "기상관측통계"
+      },
+      {
+        "topic_id": "environment_fine_dust",
+        "question": "미세먼지가 심한 달은 언제일까?",
+        "related_statistics": "대기오염도 통계"
+      },
+      {
+        "topic_id": "environment_tropical_nights",
+        "question": "열대야 일수는 지역에 따라 얼마나 다를까?",
+        "related_statistics": "기상관측통계"
+      }
+    ]
+  },
+  {
+    "field_id": "economy",
+    "field_name": "경제·경영",
+    "topics": [
+      {
+        "topic_id": "economy_ramen_price",
+        "question": "라면 값은 10년 동안 얼마나 올랐을까?",
+        "related_statistics": "소비자물가조사(품목별)"
+      },
+      {
+        "topic_id": "economy_regional_income",
+        "question": "지역마다 1인당 소득은 얼마나 다를까?",
+        "related_statistics": "지역소득"
+      },
+      {
+        "topic_id": "economy_price_uniformity",
+        "question": "물가가 오를 때 모든 품목이 같이 오를까?",
+        "related_statistics": "소비자물가조사(품목별)"
+      }
+    ]
+  },
+  {
+    "field_id": "it",
+    "field_name": "정보·IT",
+    "topics": [
+      {
+        "topic_id": "it_internet_time_by_age",
+        "question": "세대별로 인터넷을 쓰는 시간은 얼마나 다를까?",
+        "related_statistics": "인터넷이용실태조사"
+      },
+      {
+        "topic_id": "it_smartphone_usage",
+        "question": "스마트폰으로 가장 많이 하는 일은 나이에 따라 다를까?",
+        "related_statistics": "인터넷이용실태조사"
+      }
+    ]
+  },
+  {
+    "field_id": "welfare",
+    "field_name": "사회복지",
+    "topics": [
+      {
+        "topic_id": "welfare_single_household",
+        "question": "1인 가구는 얼마나 늘었을까?",
+        "related_statistics": "인구총조사"
+      },
+      {
+        "topic_id": "welfare_worries",
+        "question": "사람들이 가장 걱정하는 것은 무엇일까?",
+        "related_statistics": "사회조사"
+      },
+      {
+        "topic_id": "welfare_elderly_ratio",
+        "question": "노인 인구 비율이 높은 지역은 어디일까?",
+        "related_statistics": "인구총조사"
+      }
+    ]
+  },
+  {
+    "field_id": "culture",
+    "field_name": "문화·체육",
+    "topics": [
+      {
+        "topic_id": "culture_leisure_time",
+        "question": "청소년의 여가 시간은 몇 시간이고 무엇을 할까?",
+        "related_statistics": "국민여가활동조사"
+      },
+      {
+        "topic_id": "culture_exercise_by_age",
+        "question": "규칙적으로 운동하는 사람의 비율은 나이에 따라 어떻게 다를까?",
+        "related_statistics": "국민생활체육조사"
+      }
+    ]
+  },
+  {
+    "field_id": "safety",
+    "field_name": "안전·교통",
+    "topics": [
+      {
+        "topic_id": "safety_accident_time",
+        "question": "교통사고는 몇 시에 가장 많이 일어날까?",
+        "related_statistics": "교통사고통계"
+      },
+      {
+        "topic_id": "safety_school_zone",
+        "question": "어린이 보호구역 사고는 줄었을까?",
+        "related_statistics": "교통사고통계"
+      },
+      {
+        "topic_id": "safety_bicycle_season",
+        "question": "자전거 사고는 계절에 따라 다를까?",
+        "related_statistics": "교통사고통계"
+      }
+    ]
+  }
+]

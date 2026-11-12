@@ -1,0 +1,259 @@
+[
+  {
+    "topic_id": "population_aging",
+    "title": "우리나라는 정말 늙어가고 있을까?",
+    "question": "연도별 고령 인구 비율은 어떻게 변했을까?",
+    "category": "인구",
+    "level": "middle_high",
+    "concepts": [
+      "비율",
+      "추세",
+      "선그래프"
+    ],
+    "recommended_charts": [
+      "line",
+      "bar"
+    ],
+    "disabled": false
+  },
+  {
+    "topic_id": "private_education_cost",
+    "title": "사교육비, 우리만 많이 쓸까?",
+    "question": "지역과 연도에 따라 평균 사교육비는 어떻게 다를까?",
+    "category": "교육",
+    "level": "middle_high",
+    "concepts": [
+      "평균",
+      "비교",
+      "막대그래프"
+    ],
+    "recommended_charts": [
+      "bar",
+      "line"
+    ],
+    "disabled": false
+  },
+  {
+    "topic_id": "youth_health",
+    "title": "청소년은 얼마나 자고, 얼마나 움직일까?",
+    "question": "우리나라 청소년의 학년별·성별 수면 시간과 신체활동 빈도는 어떤 분포를 보일까?",
+    "category": "보건",
+    "level": "middle",
+    "concepts": [
+      "분포",
+      "히스토그램",
+      "상자그림",
+      "비교"
+    ],
+    "recommended_charts": [
+      "histogram",
+      "boxplot",
+      "bar"
+    ],
+    "disabled": false
+  },
+  {
+    "topic_id": "summer_temperature",
+    "title": "여름은 정말 더 더워졌을까?",
+    "question": "여름 평균기온과 폭염일수는 시간이 지나며 어떻게 변했을까?",
+    "category": "기후",
+    "level": "middle_high",
+    "concepts": [
+      "평균",
+      "범위",
+      "상자그림"
+    ],
+    "recommended_charts": [
+      "line",
+      "boxplot",
+      "scatter"
+    ],
+    "disabled": false
+  },
+  {
+    "topic_id": "temperature_power_correlation",
+    "title": "기온과 전력 사용량은 정말 관련이 있을까?",
+    "question": "평균기온과 전력 사용량 사이에는 어떤 관계가 있을까?",
+    "category": "에너지",
+    "level": "middle_high",
+    "concepts": [
+      "산점도",
+      "상관계수",
+      "관계"
+    ],
+    "recommended_charts": [
+      "scatter",
+      "line"
+    ],
+    "disabled": false,
+    "level_variants": {
+      "middle": {
+        "question": "기온이 높은 날과 낮은 날의 전력 사용량은 얼마나 다를까?",
+        "concepts": [
+          "평균",
+          "비교",
+          "산점도 읽기"
+        ],
+        "recommended_charts": [
+          "scatter",
+          "bar",
+          "line"
+        ],
+        "guidance": "상관계수를 계산하지 않아도 됩니다. 기온을 몇 개 구간으로 나눈 뒤 구간별 전력 사용량의 평균을 막대그래프로 비교하고, 산점도에서 점이 어느 방향으로 몰리는지 눈으로 확인해 보세요."
+      }
+    }
+  },
+  {
+    "topic_id": "benford_law",
+    "title": "벤포드의 법칙이란 무엇일까?",
+    "question": "자연스럽게 생긴 숫자의 첫 자리 숫자는 정말 1이 가장 많을까?",
+    "category": "수학",
+    "level": "middle_high",
+    "concepts": [
+      "첫 자리 숫자",
+      "비율",
+      "기대 분포",
+      "로그"
+    ],
+    "recommended_charts": [
+      "bar",
+      "line"
+    ],
+    "disabled": false,
+    "level_variants": {
+      "middle": {
+        "title": "숫자의 첫 자리에는 어떤 수가 많을까?",
+        "question": "생활 속 자료에서 숫자의 첫 자리에 오는 값은 1부터 9까지 고르게 나타날까?",
+        "concepts": [
+          "도수분포표",
+          "상대도수",
+          "막대그래프"
+        ],
+        "recommended_charts": [
+          "bar"
+        ],
+        "guidance": "로그나 기대 분포 공식은 쓰지 않습니다. 첫 자리 숫자를 세어 도수분포표를 만들고 상대도수를 막대그래프로 그려서, 고르게 나오리라는 예상과 실제가 어떻게 다른지 비교해 보세요."
+      }
+    }
+  },
+  {
+    "topic_id": "simpsons_paradox",
+    "title": "합치면 결론이 뒤집힌다 — 심슨의 역설",
+    "question": "시도별 사망률을 그대로 비교하면 전남·경북이 서울보다 훨씬 높게 나온다. 그런데 연령표준화 사망률로 바꾸면 순위가 달라질까? 지역마다 나이 구성이 다르면 단순 비교가 왜 어긋날까?",
+    "category": "통계 역설",
+    "level": "high",
+    "concepts": [
+      "가중 평균",
+      "집계 함정",
+      "교란 변수",
+      "연령표준화"
+    ],
+    "recommended_charts": [
+      "bar"
+    ],
+    "disabled": false
+  },
+  {
+    "topic_id": "regression_to_mean",
+    "title": "기록적 폭염 다음 해는 시원할까? — 평균으로의 회귀",
+    "question": "폭염일수가 역대 최고였던 해 다음 해 기온은 어떤 경향을 보일까? 극단적 이상값 이후에는 평균으로 돌아오는 패턴이 나타날까?",
+    "category": "통계 역설",
+    "level": "high",
+    "concepts": [
+      "극단값",
+      "평균 회귀",
+      "기댓값",
+      "산점도"
+    ],
+    "recommended_charts": [
+      "scatter",
+      "line",
+      "bar"
+    ],
+    "disabled": false
+  },
+  {
+    "topic_id": "base_rate_fallacy",
+    "title": "'질환의심' 판정을 받으면 정말 환자일까? — 기저율의 함정",
+    "question": "일반건강검진에서 '질환의심' 판정을 받은 사람은 몇 명이고, 실제 유질환자는 몇 명일까? 판정 결과만 보고 내가 환자일 확률을 짐작하면 왜 어긋날까?",
+    "category": "통계 역설",
+    "level": "high",
+    "concepts": [
+      "기저율",
+      "조건부 확률",
+      "위양성",
+      "비율 비교"
+    ],
+    "recommended_charts": [
+      "bar"
+    ],
+    "disabled": false
+  },
+  {
+    "topic_id": "survivorship_bias",
+    "title": "살아남은 데이터만 보면 틀린다 — 생존자 편향",
+    "question": "창업한 기업은 1년, 3년, 5년 뒤에 몇 %나 남아 있을까? 지금 영업 중인 가게만 보고 창업 성공률을 짐작하면 왜 실제보다 높게 나올까?",
+    "category": "통계 역설",
+    "level": "middle_high",
+    "concepts": [
+      "선택 편향",
+      "대표성",
+      "생존 집단",
+      "비교군 누락"
+    ],
+    "recommended_charts": [
+      "bar"
+    ],
+    "disabled": false,
+    "level_variants": {
+      "middle": {
+        "title": "남아 있는 것만 세면 무엇을 놓칠까?",
+        "question": "창업한 가게는 1년, 3년, 5년 뒤에 몇 %가 남아 있을까? 지금 영업 중인 가게만 세면 무엇을 빠뜨리게 될까?",
+        "concepts": [
+          "상대도수",
+          "비율 비교",
+          "조사 대상",
+          "막대그래프"
+        ],
+        "recommended_charts": [
+          "bar"
+        ],
+        "guidance": "어려운 편향 용어를 쓰지 않아도 됩니다. 연차별 생존 비율을 막대그래프로 그린 뒤, '사라진 가게는 자료에 남아 있을까?'를 스스로 물어보면서 조사 대상이 빠지면 결론이 어떻게 달라지는지 이야기해 보세요."
+      }
+    }
+  },
+  {
+    "topic_id": "school_traffic_safety",
+    "title": "학교 주변 교통안전시설은 사고 위험을 낮출까?",
+    "question": "학교 주변의 횡단보도·신호등·과속방지턱 수와 사고위험밀도는 어떤 관계가 있을까?",
+    "category": "안전",
+    "level": "middle_high",
+    "concepts": [
+      "상관계수",
+      "층화분석",
+      "공간분포"
+    ],
+    "recommended_charts": [
+      "scatter",
+      "map"
+    ],
+    "disabled": false,
+    "level_variants": {
+      "middle": {
+        "question": "학교 주변에 횡단보도와 신호등이 많은 곳과 적은 곳은 사고 위험이 얼마나 다를까?",
+        "concepts": [
+          "평균",
+          "비교",
+          "막대그래프",
+          "지도 읽기"
+        ],
+        "recommended_charts": [
+          "bar",
+          "map",
+          "scatter"
+        ],
+        "guidance": "상관계수나 층화분석 대신, 안전시설 수가 많은 학교와 적은 학교로 나누어 사고위험밀도의 평균을 비교해 보세요. 지도로 어느 지역에 몰려 있는지 함께 살펴보면 관찰한 사실을 설명하기 쉬워집니다."
+      }
+    }
+  }
+]

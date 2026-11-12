@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>차시별 수업</title>
+  <link rel="stylesheet" href="./css/lessons.css?v=7" />
+</head>
+<body>
+  <header class="lesson-header">
+    <strong>통계 에이전트 · 차시별 수업</strong>
+    <div class="user-strip">
+      <a class="header-tool-link" id="dash-link" href="../teacher.html" hidden>교사 대시보드</a>
+      <span id="current-user"></span>
+    </div>
+  </header>
+  <main>
+    <section class="staff-tools" id="staff-tools" hidden>
+      <h2 class="staff-tools-title">교사 도구</h2>
+      <div class="staff-tools-grid">
+        <a class="staff-tool primary-tool" href="./present.html">
+          <span class="staff-tool-name">수업 진행</span>
+          <span class="staff-tool-desc">카드를 한 장씩 띄우고 학생 화면을 안내합니다</span>
+        </a>
+        <a class="staff-tool" href="./roster.html">
+          <span class="staff-tool-name">학급 명단과 PIN</span>
+          <span class="staff-tool-desc">학급 코드를 만들고 학생 PIN을 발급합니다</span>
+        </a>
+        <a class="staff-tool" href="./teacher.html">
+          <span class="staff-tool-name">학생 진행 현황</span>
+          <span class="staff-tool-desc">학생별로 어느 차시까지 했는지 봅니다</span>
+        </a>
+        <a class="staff-tool staff-tool-admin" id="admin-tool" href="./admin.html" hidden>
+          <span class="staff-tool-name">학급·계정 배정</span>
+          <span class="staff-tool-desc">관리자용 · 학급, 교사, 학생을 배정합니다</span>
+        </a>
+      </div>
+    </section>
+
+    <h1 class="lesson-title">차시 목록</h1>
+    <p class="lesson-topic">
+      교사가 알려준 주소로 들어오면 그 차시가 시작됩니다. 어떤 과정(트랙)의 내용이
+      나올지는 학급에 정해져 있어 따로 고를 필요가 없습니다.
+    </p>
+
+    <p class="lesson-access-notice" id="student-entry" hidden>
+      학생은 선생님이 알려준 <strong>참여 코드</strong>로 들어옵니다.
+      <a class="lesson-access-action primary" href="./login.html">참여 코드 입력하기</a>
+    </p>
+    <ul class="lesson-list" id="lesson-list">
+      <li><a href="./lesson1.html">1차시 · 에이전트가 무엇을 해 주는가</a></li>
+      <li><a href="./lesson2.html">2차시 · 자료는 어디서 오는가</a></li>
+      <li><a href="./lesson3.html">3차시 · 자료를 목적에 맞게 바꾼다</a></li>
+      <li><a href="./lesson4.html">4차시 · 이 자료로 그 계산을 해도 되는가</a></li>
+      <li><a href="./lesson5.html">5차시 · 주제 정하기와 자료 확보</a></li>
+      <li><a href="./lesson6.html">6차시 · 분석과 정리</a></li>
+      <li><a href="./lesson7.html">7차시 · 발표</a></li>
+    </ul>
+  </main>
+  <div id="toast" hidden></div>
+
+  <script src="./js/state.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+  <script>
+    function showStaffTools(role) {
+      const isStaff = role === "teacher" || role === "admin";
+      document.getElementById("staff-tools").hidden = !isStaff;
+      document.getElementById("dash-link").hidden = !isStaff;
+      document.getElementById("admin-tool").hidden = role !== "admin";
+    }
+    showStaffTools(StatAuth.getCachedNavRole?.() || "");
+    window.__authReady = StatAuth.init()
+      .then(() => {
+        document.getElementById("student-entry").hidden = StatAuth.isSignedIn();
+        showStaffTools(StatAuth.getNavRole());
+        if (StatAuth.isSignedIn()) {
+          StatApi.request("/api/lessons/catalog")
+            .then((catalog) => {
+              if (!catalog?.lessons?.length) return;
+              const list = document.getElementById("lesson-list");
+              list.textContent = "";
+              catalog.lessons.forEach((item, index) => {
+                const li = document.createElement("li");
+                const link = document.createElement("a");
+                link.href = `./${item.lesson_id}.html`;
+                link.textContent = `${index + 1}차시 · ${item.title}`;
+                li.appendChild(link);
+                list.appendChild(li);
+              });
+            })
+            .catch(() => {});
+        }
+      })
+      .catch((error) => {
+        document.getElementById("student-entry").hidden = false;
+        StatApi.toast(error.message);
+      });
+  </script>
+  <script src="./js/index.js"></script>
+</body>
+</html>

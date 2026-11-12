@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>관리자 콘솔 | 통계 에이전트</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("stat-theme");
+          var dark = stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+        } catch (error) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="./css/styles.css?v=20260731-04" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./index.html">통계 에이전트</a>
+      <div class="user-strip">
+        <button id="theme-toggle" type="button" data-theme-toggle></button>
+        <span id="current-user"></span>
+      </div>
+    </header>
+
+    <main class="dashboard-shell admin-shell">
+      <section class="workspace admin-console">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">관리자 콘솔</p>
+            <h1>운영 관리</h1>
+          </div>
+          <button id="admin-refresh-btn">새로고침</button>
+        </div>
+        <section class="admin-section-card admin-section-card-accent">
+          <h2>운영 상태</h2>
+          <div id="admin-status" class="metric-grid"></div>
+        </section>
+        <section class="admin-section-card">
+          <h2>배포 준비 점검</h2>
+          <div id="admin-readiness" class="table-wrap"></div>
+        </section>
+        <section class="admin-section-card admin-form-panel">
+          <h2>학생/사용자 추가</h2>
+          <form id="admin-user-form" class="custom-analysis-form">
+            <div class="custom-analysis-fields">
+              <label class="analysis-field"><span>이메일</span><input id="admin-user-email" required /></label>
+              <label class="analysis-field"><span>이름</span><input id="admin-user-name" required /></label>
+              <label class="analysis-field"><span>역할</span><select id="admin-user-role"><option value="student">학생</option><option value="teacher">교사</option><option value="admin">관리자</option></select></label>
+              <label class="analysis-field"><span>학급</span><input id="admin-user-class" /></label>
+              <label class="analysis-field"><span>담당 교사 ID</span><input id="admin-user-teacher" /></label>
+              <label class="analysis-field"><span>모둠</span><input id="admin-user-group" /></label>
+            </div>
+            <button type="submit" class="primary">사용자 저장</button>
+          </form>
+        </section>
+        <section class="admin-section-card">
+          <h2>학생 배치 라우터</h2>
+          <div id="admin-hierarchy" class="hierarchy-router"></div>
+        </section>
+        <div class="admin-card-grid">
+          <section class="admin-section-card">
+            <h2>사용자 목록</h2>
+            <div id="admin-users" class="table-wrap"></div>
+          </section>
+          <section class="admin-section-card">
+            <h2>학급 목록</h2>
+            <div id="admin-classes" class="table-wrap"></div>
+          </section>
+        </div>
+        <section class="admin-section-card">
+          <h2>사용자별 프로젝트</h2>
+          <div id="admin-projects" class="table-wrap"></div>
+        </section>
+        <section class="admin-section-card">
+          <h2>API 호출량과 일시정지</h2>
+          <div id="admin-usage" class="table-wrap"></div>
+        </section>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="./js/theme.js?v=20260731-03"></script>
+    <script src="./js/state.js?v=20260731-03"></script>
+    <script src="./js/api.js?v=20260731-03"></script>
+    <script src="./js/auth.js?v=20260731-03"></script>
+    <script src="./js/admin.js?v=20260731-03"></script>
+  </body>
+</html>

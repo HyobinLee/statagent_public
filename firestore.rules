@@ -1,0 +1,26 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function me() {
+      return get(/databases/$(database)/documents/lesson_users/$(request.auth.uid)).data;
+    }
+
+    match /lesson_classSessions/{classId} {
+      allow read: if request.auth != null
+                  && (me().class_id == classId || me().role in ['teacher', 'admin']);
+      allow write: if false;
+    }
+
+    match /lesson_discussResponses/{responseId} {
+      allow read: if request.auth != null
+                  && (resource.data.teacher_id == request.auth.uid || me().role == 'admin');
+      allow write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

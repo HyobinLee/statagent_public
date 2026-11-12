@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>4차시 · 이 자료로 그 계산을 해도 되는가</title>
+  <link rel="stylesheet" href="./css/lessons.css?v=7" />
+</head>
+<body>
+  <main class="deck-main">
+    <div class="lesson-topline" id="lesson-topline">
+      <div class="present-settings">
+        <button id="settings-btn" type="button" class="present-settings-btn" aria-label="설정"
+                title="설정" aria-expanded="false" aria-controls="settings-panel">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+        <div id="settings-panel" class="present-settings-panel" role="dialog" aria-label="설정" hidden>
+          <div class="lesson-settings-heading">
+            <p class="present-settings-context" id="lesson-title">4차시</p>
+            <p class="lesson-settings-topic" id="lesson-topic"></p>
+          </div>
+          <nav class="present-settings-links" aria-label="다른 화면">
+            <a href="./index.html">차시 목록</a>
+          </nav>
+          <div class="user-strip present-settings-user">
+            <span id="current-user"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="deck"></div>
+  </main>
+  <div id="toast" hidden></div>
+
+  <script src="./js/state.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/kit/toast.js"></script>
+  <script src="./js/kit/settings_menu.js"></script>
+  <script src="./js/kit/access.js"></script>
+  <script src="./js/kit/icons.js"></script>
+  <script src="./js/kit/chart.js"></script>
+  <script src="./js/kit/explain.js"></script>
+  <script src="./js/kit/sheet.js"></script>
+  <script src="./js/kit/analysis.js"></script>
+  <script src="./js/kit/state.js"></script>
+  <script src="./js/kit/realtime.js"></script>
+  <script src="./js/kit/discuss.js"></script>
+  <script src="./js/kit/renderers.js"></script>
+  <script src="./js/kit/deck.js"></script>
+  <script src="./js/lesson4.js"></script>
+</body>
+</html>

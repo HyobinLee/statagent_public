@@ -1,0 +1,281 @@
+{
+  "lesson1": {
+    "title": "중학 통계 다시 보기 — 에이전트와 함께",
+    "topic_sentence": "두 학급의 중간고사 성적, 중학교에서 배운 통계로 어디까지 말할 수 있을까?",
+    "dataset_file": "midterm_scores_two_classes.csv",
+    "dataset_source": "수업용 예시 자료 (두 학급 중간고사 성적)",
+    "steps": [
+      {
+        "ref": "h_l1_intro"
+      },
+      {
+        "ref": "h_l1_sheet"
+      },
+      {
+        "ref": "l1_compare_classes"
+      },
+      {
+        "ref": "l1_spread_concept"
+      },
+      {
+        "ref": "l1_frequency_polygon"
+      },
+      {
+        "ref": "l1_polygon_hinge"
+      },
+      {
+        "ref": "h_l1_review_rate"
+      },
+      {
+        "ref": "h_l1_review_weighted"
+      },
+      {
+        "ref": "h_l1_ai_caution"
+      },
+      {
+        "ref": "h_l1_wrapup"
+      }
+    ]
+  },
+  "lesson2": {
+    "title": "자료를 목적에 맞게 바꾼다 — 기준이 결론의 일부가 된다",
+    "mode": "self",
+    "topic_sentence": "범주를 묶는 기준이 달라지면 결론도 달라질까?",
+    "dataset_file": "meal_survey.csv",
+    "dataset_source": "가상 설문 자료 (날짜·주요리명은 NEIS 실제 급식 자료, 만족도는 설계된 가상 값)",
+    "steps": [
+      {
+        "ref": "h_l2_concept"
+      },
+      {
+        "ref": "l3_meal_sheet"
+      },
+      {
+        "ref": "l3_categorize"
+      },
+      {
+        "ref": "l3_satisfaction_predict"
+      },
+      {
+        "ref": "l3_satisfaction_evidence"
+      },
+      {
+        "ref": "l3_category_hinge"
+      },
+      {
+        "ref": "h_l2_boundary_shift"
+      },
+      {
+        "ref": "h_l2_transform_note"
+      },
+      {
+        "ref": "l3_benford_intro",
+        "body": [
+          "이 단계와 다음 단계는 시간이 남는 학생을 위한 심화입니다. 선생님이 안내하지 않았다면 건너뛰고 마지막 단계로 가도 됩니다.",
+          "세상의 집계 숫자(나라별 인구, 회계 장부의 금액 등)를 많이 모아 첫 자리 숫자만 보면, 1~9가 똑같은 빈도로 나오지 않는 경우가 많습니다. 1로 시작하는 수가 가장 많고 9로 시작하는 수가 가장 적은 이 경향을 **벤포드의 법칙**이라고 합니다.",
+          "이론값(첫 자리가 1일 확률부터): 1 → 30.1%, 2 → 17.6%, 3 → 12.5%, 4 → 9.7%, 5 → 7.9%, 6 → 6.7%, 7 → 5.8%, 8 → 5.1%, 9 → 4.6%.",
+          "그렇다면 실제 공공데이터도 이 법칙을 따를까요? 다음 단계에서 경기도 학교도서관 자료를 불러와 '자료 수 합계(DATA_CNT_SUM)'의 첫 자리 숫자를 눈으로 확인해 봅시다.",
+          "미리 기억해 둘 것 — 분포가 이론값과 다르다는 것만으로 자료가 조작되었거나 틀렸다고 단정하지 않습니다. 자료의 개수와 범위에 따라 법칙이 잘 맞지 않는 경우도 많습니다."
+        ]
+      },
+      {
+        "ref": "l3_benford_data",
+        "body": [
+          "경기도가 공공데이터 포털 '경기데이터드림'(data.gg.go.kr)에 공개한 실제 자료입니다. 한 행이 학교 하나이고, 최신 연도 기준 경기도의 초·중·고 약 2,500개 학교가 들어 있습니다(경기도 전체 현황이라 우리 학교(세종)는 없습니다). 표에서 '자료 수 합계(DATA_CNT_SUM)' 값들의 첫 자리 숫자를 눈으로 훑어보세요.",
+          "확인해 보면 이 자료는 벤포드의 법칙을 잘 따르지 않습니다. 1로 시작하는 학교가 가장 많은 것은 맞지만 절반 가까이로 이론값(30.1%)보다 훨씬 많고, 2로 시작하는 학교도 이론값(17.6%)의 두 배가 넘으며, 3~9로 시작하는 학교는 거의 없습니다.",
+          "이유는 자료의 범위에 있습니다. 학교 도서관의 자료 수는 대부분 1만~2만 점대에 몰려 있어 첫 자리가 1과 2에 집중됩니다. 벤포드의 법칙은 수백에서 수백만까지 여러 자릿수에 걸쳐 퍼진 자료에서 잘 나타납니다.",
+          "'법칙이 왜 안 맞는지'를 자료의 성질(값이 퍼진 범위)로 설명할 수 있다면, 법칙 이름을 외우는 것보다 훨씬 통계답게 쓴 것입니다. 이 자료는 다음 차시에서 다시 씁니다."
+        ]
+      },
+      {
+        "ref": "h_l2_wrapup"
+      }
+    ]
+  },
+  "lesson3": {
+    "title": "나눠 보면 달라진다 — 집단 비교의 함정",
+    "mode": "self",
+    "topic_sentence": "전체를 묶어 본 결론과 나눠 본 결론이 다를 때, 무엇을 믿어야 할까?",
+    "dataset_file": "high_afterschool_math.csv",
+    "dataset_source": "수업용 예시 자료 (방과후 수학 프로그램의 향상점수 — 실제 운영 자료가 아닌 설계된 값)",
+    "steps": [
+      {
+        "ref": "h_l3_concept"
+      },
+      {
+        "ref": "h_l3_sheet"
+      },
+      {
+        "ref": "h_l3_overall_predict"
+      },
+      {
+        "ref": "h_l3_why_simpson"
+      },
+      {
+        "ref": "h_l3_simpson_hinge"
+      },
+      {
+        "ref": "h_l3_simpson_evidence"
+      },
+      {
+        "ref": "h_l3_real_strata"
+      },
+      {
+        "ref": "h_l3_wrapup"
+      }
+    ]
+  },
+  "lesson4": {
+    "title": "이 자료로 그 계산을 해도 되는가",
+    "mode": "self",
+    "topic_sentence": "사교육비 순위는 어떤 기준으로 보느냐에 따라 달라질까?",
+    "dataset_file": "sido_private_education_2025.csv",
+    "dataset_source": "통계청 초중고사교육비조사(2025) — '참여학생기준_사교육비'는 원자료의 두 항목(학생1인당_사교육비 ÷ 사교육_참여율)으로 계산한 값",
+    "steps": [
+      {
+        "ref": "h_l4_concept"
+      },
+      {
+        "ref": "h_l4_sido_sheet"
+      },
+      {
+        "ref": "h_l4_basis_predict"
+      },
+      {
+        "ref": "h_l4_comparison"
+      },
+      {
+        "ref": "h_l4_basis_hinge"
+      },
+      {
+        "ref": "h_l4_basis_evidence"
+      },
+      {
+        "ref": "h_l4_wrapup"
+      }
+    ]
+  },
+  "lesson5": {
+    "title": "주제 정하기와 자료 확보",
+    "mode": "self",
+    "topic_sentence": "내가 탐구할 주제는 무엇이고, 그 주제에 쓸 자료는 어떻게 마련할까?",
+    "steps": [
+      {
+        "ref": "l5_concept"
+      },
+      {
+        "ref": "l5_career_select"
+      },
+      {
+        "ref": "l5_question_hinge"
+      },
+      {
+        "ref": "l5_data_intro"
+      },
+      {
+        "ref": "l5_web_table"
+      },
+      {
+        "ref": "l5_group_share"
+      },
+      {
+        "ref": "l5_inquiry_check"
+      },
+      {
+        "ref": "l5_wrapup"
+      }
+    ]
+  },
+  "lesson6": {
+    "title": "분석과 정리",
+    "mode": "self",
+    "topic_sentence": "내가 마련한 자료로 무엇을 알 수 있을까?",
+    "project_lesson_id": "lesson5",
+    "steps": [
+      {
+        "ref": "l6_concept"
+      },
+      {
+        "ref": "l6_spread_reminder",
+        "body": [
+          "1차시에서 평균이 높은 반과 중앙값이 높은 반이 달랐던 것을 기억하나요? 대푯값 하나로는 집단을 다 말할 수 없었습니다.",
+          "내 자료를 분석할 때도 마찬가지입니다. 평균을 비교했다면 범위나 표준편차 같은 산포도, 그리고 각 집단의 자료 수(행 수, 응답 수)를 함께 확인하세요.",
+          "집단별 자료 수가 크게 다르면 두 가지 일이 생길 수 있습니다 — 자료가 적은 집단의 평균은 몇 개의 값에 좌우되기 쉽고(2차시의 '메뉴 두 개짜리 범주가 평균 1등' 문제), 집단 구성이 다르면 전체 평균이 나눈 평균과 반대로 갈 수도 있습니다(3차시의 방과후 자료). 평균을 합치거나 비교하기 전에 그 평균이 무엇으로 나눈 값인지도 확인하세요(4차시)."
+        ]
+      },
+      {
+        "ref": "l6_analysis_predict"
+      },
+      {
+        "ref": "l6_analysis"
+      },
+      {
+        "ref": "l6_corr_hinge",
+        "prompts": [
+          {
+            "prompt_id": "h_l6_hinge_corr",
+            "type": "hinge",
+            "target": [
+              "R9",
+              "R8"
+            ],
+            "answer": "C",
+            "observe": "A는 상관을 인과로 읽는 R9, B는 집계 단위를 개인에 적용하는 R8, D는 '1이 아니면 관계없다'는 결정론적 R9. 고교 버전의 추가 포인트 — 정답 C의 둘째 문장(학생1인당 사교육비는 참여율을 넣어 계산한 값)처럼, 상관을 해석하기 전에 두 변수가 서로 독립적으로 측정된 값인지 묻는 학생을 칭찬한다.",
+            "question": "가장 알맞은 해석은 무엇인가요?",
+            "choices": [
+              {
+                "key": "A",
+                "label": "참여율을 높이면 그 지역의 사교육비가 오른다.",
+                "target": [
+                  "R9"
+                ]
+              },
+              {
+                "key": "B",
+                "label": "참여율이 높은 시도에 사는 학생은 누구나 사교육비를 많이 쓴다.",
+                "target": [
+                  "R8"
+                ]
+              },
+              {
+                "key": "C",
+                "label": "참여율이 높은 시도일수록 1인당 사교육비도 높은 경향이 있다. 다만 이 사교육비는 참여율을 넣어 계산한 값이라 둘이 함께 움직이는 부분이 있다."
+              },
+              {
+                "key": "D",
+                "label": "상관계수가 1이 아니므로 두 값의 관계는 확실하지 않다.",
+                "target": [
+                  "R9"
+                ]
+              }
+            ],
+            "placeholder": "그렇게 고른 이유를 적어 주세요."
+          }
+        ]
+      },
+      {
+        "ref": "l6_wrapup"
+      }
+    ]
+  },
+  "lesson7": {
+    "title": "발표",
+    "mode": "self",
+    "topic_sentence": "탐구한 내용을 어떻게 정리해 보여줄까?",
+    "project_lesson_id": "lesson5",
+    "steps": [
+      {
+        "ref": "l7_concept"
+      },
+      {
+        "ref": "l7_audience_cards"
+      },
+      {
+        "ref": "l7_presentation"
+      },
+      {
+        "ref": "l7_wrapup"
+      }
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>교사 대시보드 | 통계 에이전트</title>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("stat-theme");
+          var dark = stored ? stored === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme = dark ? "dark" : "light";
+        } catch (error) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="./css/styles.css?v=20260731-04" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./index.html">통계 에이전트</a>
+      <div class="user-strip">
+        <button id="student-preview-btn" type="button">학생 화면 미리보기</button>
+        <button id="theme-toggle" type="button" data-theme-toggle></button>
+        <span id="current-user"></span>
+      </div>
+    </header>
+
+    <main class="dashboard-shell">
+      <section class="workspace">
+        <div class="section-title">
+          <div>
+            <p class="eyebrow">교사 대시보드</p>
+            <h1>진행과 피드백</h1>
+          </div>
+          <button id="refresh-btn">새로고침</button>
+        </div>
+
+        <a class="lessons-entry" id="lessons-entry" href="/lessons/">
+          <span class="lessons-entry-text">
+            <strong>차시별 수업 열기</strong>
+            <span>1~7차시 수업 화면, 학급 명단·PIN 발급, 학생 진행 현황</span>
+          </span>
+          <span class="lessons-entry-cta" aria-hidden="true">→</span>
+        </a>
+
+        <div id="teacher-summary" class="metric-grid"></div>
+        <section class="teacher-controls">
+          <h2>학생 배치 라우터</h2>
+          <div id="teacher-hierarchy" class="hierarchy-router"></div>
+        </section>
+        <section class="teacher-controls">
+          <h2>수업 운영 설정</h2>
+          <div class="custom-analysis-fields">
+            <form id="school-level-form" class="custom-analysis-form">
+              <label class="analysis-field"><span>학교급</span><select id="school-level"><option value="middle_high">중·고 공통</option><option value="middle">중학교</option><option value="high">고등학교</option></select></label>
+              <button type="submit">저장</button>
+            </form>
+            <form id="topic-template-form" class="custom-analysis-form">
+              <label class="analysis-field"><span>예시 과제 제목</span><input id="topic-template-title" /></label>
+              <label class="analysis-field"><span>탐구 질문</span><input id="topic-template-question" /></label>
+              <button type="submit">예시 과제 저장</button>
+            </form>
+          </div>
+        </section>
+        <div class="split">
+          <section>
+            <h2>학생별 현재 단계</h2>
+            <div id="student-list" class="table-wrap"></div>
+          </section>
+          <section>
+            <h2>차단된 사용자</h2>
+            <div id="blocked-list" class="table-wrap"></div>
+          </section>
+        </div>
+        <section>
+          <h2>제출된 보고서</h2>
+          <div id="report-list" class="report-list"></div>
+        </section>
+        <section>
+          <h2>공유 설정</h2>
+          <form id="share-rule-form" class="custom-analysis-form">
+            <div class="custom-analysis-fields">
+              <label class="analysis-field"><span>공유 단계</span><select id="share-stage"><option value="topic">주제</option><option value="dataset">자료</option><option value="analysis">분석</option><option value="conclusion">결론</option><option value="report">보고서</option></select></label>
+              <label class="analysis-field"><span>공유 방식</span><select id="share-mode"><option value="all">전체 공개</option><option value="sample">임의 일부 공개</option><option value="teacher_selected">교사 선택 공개</option><option value="targeted">대상 지정 공개</option></select></label>
+              <label class="analysis-field"><span>공유할 학생 ID</span><input id="share-source-users" placeholder="student-001, student-002" /></label>
+              <label class="analysis-field"><span>받을 학생 ID</span><input id="share-target-users" placeholder="비우면 전체" /></label>
+              <label class="analysis-field"><span>받을 모둠</span><input id="share-target-groups" placeholder="기후 모둠" /></label>
+            </div>
+            <button type="submit">공유 규칙 추가</button>
+          </form>
+          <div id="share-rule-list" class="table-wrap"></div>
+        </section>
+      </section>
+      <aside class="side-panel">
+        <h2>보고서 상세</h2>
+        <div id="report-detail" class="detail-pane muted">보고서를 선택하세요.</div>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script src="./js/theme.js?v=20260731-03"></script>
+    <script src="./js/state.js?v=20260731-03"></script>
+    <script src="./js/api.js?v=20260731-03"></script>
+    <script src="./js/auth.js?v=20260731-03"></script>
+    <script src="./js/teacher.js?v=20260731-03"></script>
+  </body>
+</html>

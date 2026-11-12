@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>학생 로그인 · 차시별 수업</title>
+  <link rel="stylesheet" href="./css/lessons.css?v=7" />
+</head>
+<body>
+  <header class="lesson-header">
+    <strong>통계 에이전트 · 차시별 수업</strong>
+    <div class="user-strip">
+      <span id="current-user"></span>
+    </div>
+  </header>
+  <main class="login-main">
+    <h1 class="lesson-title">학생 로그인</h1>
+
+    <section class="login-step" id="step-code">
+      <p class="lesson-topic">선생님이 화면에 띄운 <strong>학급 코드</strong>를 입력하세요.</p>
+      <form id="code-form">
+        <input
+          id="class-code"
+          class="lesson-dataset-name-input login-code-input"
+          type="text"
+          inputmode="latin"
+          autocomplete="off"
+          maxlength="6"
+          placeholder="예) A7K2QD"
+          required
+        />
+        <button type="submit" class="lesson-next primary">다음</button>
+      </form>
+    </section>
+
+    <section class="login-step" id="step-name" hidden>
+      <p class="lesson-topic">이름을 찾아 누르세요.</p>
+      <div id="name-list" class="login-name-list"></div>
+      <button type="button" id="back-to-code" class="lesson-connector-fetch">학급 코드 다시 입력</button>
+    </section>
+
+    <section class="login-step" id="step-pin" hidden>
+      <p class="lesson-topic"><strong id="chosen-name"></strong> 학생, 선생님께 받은 <strong>PIN 4자리</strong>를 입력하세요.</p>
+      <form id="pin-form">
+        <input
+          id="student-pin"
+          class="lesson-dataset-name-input login-code-input"
+          type="password"
+          inputmode="numeric"
+          autocomplete="off"
+          maxlength="4"
+          placeholder="● ● ● ●"
+          required
+        />
+        <button type="submit" class="lesson-next primary">들어가기</button>
+      </form>
+      <button type="button" id="back-to-name" class="lesson-connector-fetch">이름 다시 고르기</button>
+    </section>
+
+    <p class="lesson-note">
+      선생님·관리자는 이 화면이 아니라 <a href="./index.html">차시 목록</a>에서 Google 계정으로 로그인하세요.
+    </p>
+  </main>
+  <div id="toast" hidden></div>
+
+  <script src="./js/state.js"></script>
+  <script src="./js/api.js"></script>
+  <script src="./js/auth.js"></script>
+  <script src="./js/kit/toast.js"></script>
+  <script src="./js/kit/access.js"></script>
+  <script src="./js/login.js"></script>
+</body>
+</html>

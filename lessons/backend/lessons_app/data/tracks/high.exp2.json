@@ -1,0 +1,158 @@
+{
+  "lesson1": {
+    "title": "온라인반과 대면반, 어느 쪽이 더 효과적이었을까",
+    "topic_sentence": "전체 평균과 나눈 평균이 반대라면 무엇을 믿어야 할까?",
+    "dataset_file": "x2_high_afterschool_math.csv",
+    "dataset_source": "수업용 예시 자료 (방과후 수학 200명, 심슨의 역설 설계)",
+    "steps": [
+      {
+        "ref": "exp2_intro"
+      },
+      {
+        "ref": "exp2_diag_pre"
+      },
+      {
+        "ref": "x2_h_concept"
+      },
+      {
+        "ref": "x2_h_overall_predict"
+      },
+      {
+        "ref": "x2_h_why_simpson"
+      },
+      {
+        "ref": "x2_h_simpson_hinge"
+      },
+      {
+        "id": "x2_l1_wrapup",
+        "kind": "wrapup",
+        "cards": [
+          {
+            "id": "x2_l1_wrapup_card",
+            "kind": "wrapup",
+            "title": "오늘의 한 줄",
+            "body": [
+              "첫 시간을 정리합니다."
+            ],
+            "prompts": [
+              {
+                "prompt_id": "x2_l1_oneliner",
+                "type": "exit",
+                "target": [
+                  "R6"
+                ],
+                "observe": "결론을 자기 말로 쓰는지, 수치나 대푯값 이름을 넣는지 본다. 선생님의 한 줄은 학생이 쓴 뒤에 연다.",
+                "question": "오늘 수업에서 알게 된 것을 한 문장으로 쓰세요.",
+                "placeholder": "한 문장이면 됩니다."
+              }
+            ],
+            "reveals": [
+              {
+                "key": "x2_l1_teacher_line",
+                "label": "선생님의 한 줄 열기",
+                "text": [
+                  "전체 평균과 나눠 본 평균이 반대 방향을 가리킬 수 있습니다. 집단을 비교할 때는 구성(누가 섞여 있는가)을 함께 봅니다.",
+                  "다음 시간에는 전국 중학생의 사교육비 자료를 직접 살펴보고, 오늘 답한 것과 비슷한 문항에 다시 답합니다."
+                ],
+                "teacher_only": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "lesson2": {
+    "title": "전국 중학생의 사교육비 살펴보기",
+    "topic_sentence": "평균 하나로 전국 중학생의 사교육비를 말할 수 있을까?",
+    "dataset_file": "kosis_private_edu_dist_2025.csv",
+    "dataset_source": "KOSIS 초중고사교육비조사 (2025) 월평균 사교육비 지출금액 구간 및 특성별 분포, 학교급별",
+    "steps": [
+      {
+        "ref": "exp2_dist_inquiry"
+      },
+      {
+        "id": "x2d_income",
+        "kind": "discuss",
+        "title": "심화: 가구 소득과 사교육비",
+        "cards": [
+          {
+            "id": "x2d_income_card",
+            "kind": "discuss",
+            "title": "심화: 가구 소득과 사교육비",
+            "body": [
+              "같은 조사에는 가구의 한 달 소득에 따라 나눈 표도 있습니다. 소득이 300만 원이 안 되는 가구의 학생과 800만 원 이상인 가구의 학생을 비교해 보세요."
+            ],
+            "prompts": [
+              {
+                "prompt_id": "x2d_income_evidence",
+                "type": "evidence",
+                "target": [
+                  "R6",
+                  "R9",
+                  "R8"
+                ],
+                "observe": "비율 비교를 바르게 하는지(R6), 상관을 인과로 단정하는지(R9), 가구 단위 표를 개인에게 적용하는지(R8) 본다.",
+                "question": "① 두 소득 집단의 분포를 비교하는 문장을 수치를 인용해 쓰고, ② 이 표만으로 '소득이 사교육비의 원인이다'라고 말할 수 있는지 한 문장 덧붙이세요.",
+                "placeholder": "예) 300만 원 미만 가구의 학생은 ~%가 …인데 800만 원 이상은 ~%가 …. 다만 이 표는 …"
+              }
+            ],
+            "reveals": [
+              {
+                "key": "x2d_income_table",
+                "open_before_answer": true,
+                "label": "가구 월소득별 표 열기",
+                "text_rows": [
+                  [
+                    "가구 월소득",
+                    "받지 않음(%)",
+                    "70만 원 이상(%)"
+                  ],
+                  [
+                    "300만 원 미만",
+                    "47.2",
+                    "5.9"
+                  ],
+                  [
+                    "800만 원 이상",
+                    "15.1",
+                    "42.9"
+                  ]
+                ],
+                "note": "초중고 전체 학생 기준입니다."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "ref": "exp2_diag_post"
+      },
+      {
+        "id": "x2_exit",
+        "kind": "wrapup",
+        "cards": [
+          {
+            "id": "x2_exit_card",
+            "kind": "wrapup",
+            "title": "마무리",
+            "body": [
+              "두 시간 동안 생각이 어떻게 달라졌는지 돌아봅니다."
+            ],
+            "prompts": [
+              {
+                "prompt_id": "x2_exit",
+                "type": "exit",
+                "target": [
+                  "R10"
+                ],
+                "observe": "바뀐 문항과 이유를 구체적으로 짚는지 본다.",
+                "question": "방금 답한 문항을 첫 시간에 답했던 때와 견주어 보세요. 기억나는 대로, 생각이 달라진 문항 하나를 골라 무엇이 어떻게 달라졌는지 쓰세요. 달라진 것이 없다면 가장 확신이 커진 문항과 이유를 쓰세요."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

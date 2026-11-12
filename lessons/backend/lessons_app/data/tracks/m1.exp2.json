@@ -1,0 +1,101 @@
+{
+  "lesson1": {
+    "title": "두 반 중 어느 반이 더 잘 봤을까",
+    "topic_sentence": "어느 반이 더 잘 봤는지는 어떤 수로 요약하느냐에 달렸다?",
+    "dataset_file": "m1_unit_test_two_classes.csv",
+    "dataset_source": "수업용 예시 자료 (두 반 단원평가 점수, 20점 만점)",
+    "steps": [
+      {
+        "ref": "exp2_intro"
+      },
+      {
+        "ref": "exp2_diag_pre_m1"
+      },
+      {
+        "ref": "x2_m1_compare_classes"
+      },
+      {
+        "ref": "x2_m1_rep_values"
+      },
+      {
+        "ref": "x2_m1_rep_hinge"
+      },
+      {
+        "id": "x2_l1_wrapup",
+        "kind": "wrapup",
+        "cards": [
+          {
+            "id": "x2_l1_wrapup_card",
+            "kind": "wrapup",
+            "title": "오늘의 한 줄",
+            "body": [
+              "첫 시간을 정리합니다."
+            ],
+            "prompts": [
+              {
+                "prompt_id": "x2_l1_oneliner",
+                "type": "exit",
+                "target": [
+                  "R1"
+                ],
+                "observe": "결론을 자기 말로 쓰는지, 수치나 대푯값 이름을 넣는지 본다. 선생님의 한 줄은 학생이 쓴 뒤에 연다.",
+                "question": "오늘 수업에서 알게 된 것을 한 문장으로 쓰세요.",
+                "placeholder": "한 문장이면 됩니다."
+              }
+            ],
+            "reveals": [
+              {
+                "key": "x2_l1_teacher_line",
+                "label": "선생님의 한 줄 열기",
+                "text": [
+                  "어느 반이 더 잘 봤는가는 어떤 대푯값으로 요약하느냐에 따라 답이 달라졌습니다. 대푯값을 말할 때는 '평균으로는, 중앙값으로는'처럼 어떤 수인지 함께 말합니다.",
+                  "다음 시간에는 전국 중학생의 사교육비 자료를 직접 살펴보고, 오늘 답한 것과 비슷한 문항에 다시 답합니다."
+                ],
+                "teacher_only": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "lesson2": {
+    "title": "전국 중학생의 사교육비 살펴보기",
+    "topic_sentence": "평균 하나로 전국 중학생의 사교육비를 말할 수 있을까?",
+    "dataset_file": "kosis_private_edu_dist_2025.csv",
+    "dataset_source": "KOSIS 초중고사교육비조사 (2025) 월평균 사교육비 지출금액 구간 및 특성별 분포, 학교급별",
+    "steps": [
+      {
+        "ref": "exp2_dist_inquiry"
+      },
+      {
+        "ref": "exp2_diag_post_m1"
+      },
+      {
+        "id": "x2_exit",
+        "kind": "wrapup",
+        "cards": [
+          {
+            "id": "x2_exit_card",
+            "kind": "wrapup",
+            "title": "마무리",
+            "body": [
+              "두 시간 동안 생각이 어떻게 달라졌는지 돌아봅니다."
+            ],
+            "prompts": [
+              {
+                "prompt_id": "x2_exit",
+                "type": "exit",
+                "target": [
+                  "R10"
+                ],
+                "observe": "바뀐 문항과 이유를 구체적으로 짚는지 본다.",
+                "question": "방금 답한 문항을 첫 시간에 답했던 때와 견주어 보세요. 기억나는 대로, 생각이 달라진 문항 하나를 골라 무엇이 어떻게 달라졌는지 쓰세요. 달라진 것이 없다면 가장 확신이 커진 문항과 이유를 쓰세요."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

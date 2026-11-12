@@ -1,0 +1,10 @@
+[
+  {
+    "school_id": "example",
+    "atpt_ofcdc_sc_code": "",
+    "sd_schul_code": "",
+    "school_name": "예시학교",
+    "level": "high",
+    "is_default": true
+  }
+]
