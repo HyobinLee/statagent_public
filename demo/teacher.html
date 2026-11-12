@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>교사 화면 체험</title>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body class="teacher">
+  <header class="demo-header">
+    <div class="brand">
+      <a class="home" href="index.html">통계 에이전트</a>
+      <span class="badge">교사 화면 체험</span>
+      <span id="track-label" class="muted"></span>
+    </div>
+    <div class="header-actions">
+      <a class="btn-link" href="index.html" title="체험판 첫 화면으로"><span class="lbl-full">체험 홈</span><span class="lbl-short">홈</span></a>
+      <button type="button" id="guide-toggle" class="ghost">안내 끄기</button>
+      <button type="button" id="restart" class="ghost">처음부터</button>
+    </div>
+  </header>
+
+  <div class="t-toolbar">
+    <div class="t-buttons">
+      <button type="button" id="t-gather">모으기</button>
+      <button type="button" id="t-follow" class="toggle">따라오기</button>
+      <button type="button" id="t-range" class="toggle">범위</button>
+      <button type="button" id="t-hold" class="toggle">고정</button>
+      <span class="sep"></span>
+      <button type="button" id="t-answer" class="toggle">정답</button>
+      <button type="button" id="t-progress">진행 현황</button>
+      <button type="button" id="t-join">참여 안내</button>
+      <button type="button" id="t-pin">PIN</button>
+      <button type="button" id="t-settings" title="설정">⚙</button>
+    </div>
+    <div id="t-status" class="t-status"></div>
+  </div>
+
+  <div class="t-layout">
+    <div class="t-side">
+      <aside id="guide" class="guide" hidden></aside>
+      <nav id="t-nav" class="t-nav" aria-label="카드 진행바"></nav>
+    </div>
+    <main class="t-center">
+      <div id="t-card"></div>
+      <div class="row t-nav-row"><button type="button" id="t-prev">← 이전 카드</button><button type="button" id="t-next" class="primary">다음 카드 →</button></div>
+    </main>
+    <aside id="t-board" class="t-board"></aside>
+  </div>
+
+  <div id="dialog-root"></div>
+
+  <script src="demo_data.js"></script>
+  <script src="teacher_fields.js"></script>
+  <script src="teacher_sim.js"></script>
+  <script src="results.js"></script>
+  <script src="teacher.js"></script>
+</body>
+</html>
