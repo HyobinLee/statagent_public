@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>통계 에이전트 체험</title>
+  <link rel="stylesheet" href="demo.css">
+</head>
+<body class="agent">
+  <header class="demo-header">
+    <div class="brand">
+      <a class="home" href="./">통계 에이전트</a>
+      <span class="badge">체험판</span>
+      <span id="scen-label" class="muted"></span>
+    </div>
+    <div class="header-actions">
+      <button type="button" id="guide-toggle" class="ghost">안내 끄기</button>
+      <button type="button" id="restart" class="ghost">처음부터</button>
+    </div>
+  </header>
+
+  <nav class="steps" id="steps" aria-label="탐구 단계"></nav>
+
+  <main id="stage" class="stage"></main>
+
+  <div class="nav-row" id="nav-row">
+    <button type="button" id="prev" class="ghost">← 이전 단계</button>
+    <button type="button" id="next" class="primary">다음 단계 →</button>
+  </div>
+
+  <aside id="guide" class="guide" hidden></aside>
+  <div id="dialog-root"></div>
+
+  <script src="agent_data.js"></script>
+  <script src="results.js"></script>
+  <script src="agent.js"></script>
+</body>
+</html>

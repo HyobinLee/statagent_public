@@ -2,7 +2,30 @@
   "use strict";
 
   const DATA = window.DEMO_DATA;
-  const STORE_KEY = "stat-agent-demo";
+  const CFG = window.DEMO_CONFIG || { mode: "exp2" };
+  const FULL = CFG.mode === "full";
+  const STORE_KEY = `stat-agent-demo-${CFG.mode}`;
+  const R = window.DemoResults;
+  const FULL_INFO = {
+    m1: "대푯값, 도수분포표와 히스토그램, 상대도수를 다루고 미니 탐구로 마칩니다(5차시).",
+    m3: "대푯값과 산포도, 자료가 오는 길(API, CSV), 범주화, 계산의 전제를 다루고 탐구 프로젝트로 마칩니다(7차시).",
+    high: "중학 통계 다시 보기, 범주화, 심슨의 역설, 분모가 다른 평균을 다루고 탐구 프로젝트로 마칩니다(7차시).",
+    gifted: "고등학교 과정에 표집변이 모듈과 자기주도 수집 모듈을 더했습니다(7차시).",
+  };
+  const KIND_TIPS = {
+    sheet: "에이전트에게 맡기기 전에 자료를 직접 훑어봅니다. 한 행이 무엇인지부터 봅니다.",
+    analysis: "에이전트가 그린 그림입니다. 그림 아래 읽는 법과 질문을 보고 답을 씁니다.",
+    connector: "실제 수업에서는 에이전트가 기관의 API에 요청을 보내 표를 바로 받아옵니다. 체험판은 같은 API에서 미리 받아 둔 저장본을 보여 줍니다.",
+    column_guess: "영어 열 이름의 뜻을 값의 크기와 유형으로 추측해 봅니다. 예측을 보내면 실제 뜻을 열 수 있습니다.",
+    csv_upload: "체험판은 파일을 서버에 올리지 않고 이 브라우저에서 읽어 표로 보여 줍니다.",
+    categorize: "에이전트가 메뉴마다 범주를 제안합니다. 애매한 메뉴는 직접 바꿔 보세요. 내가 정한 기준이 다음 카드의 결과를 바꿉니다.",
+    career_select: "실제 진로 분야와 질문 후보가 나옵니다. 고른 질문은 5~7차시 내내 탐구 질문이 됩니다.",
+    web_table: "실제 앱에서는 표를 직접 입력하거나 붙여 넣습니다. 체험판에는 예시 자료가 미리 들어 있습니다.",
+    group_share: "실제 수업에서는 같은 모둠 학생이 만든 자료 목록이 나오고, 복사해 각자 분석합니다. 체험판에는 모둠원이 없어 이 카드는 읽고 넘어갑니다.",
+    inquiry_check: "질문, 자료, 출처가 서로 맞는지 한 번에 확인합니다.",
+    flexible_analysis: "추천 분석은 자료의 항목을 보고 에이전트가 고른 것입니다. 체험판의 결과는 실제 도구로 미리 계산했습니다.",
+    presentation: "6차시에 저장한 해석과 그림이 발표 자료로 모입니다.",
+  };
   const STAT_LABELS = { mean: "평균", median: "중앙값", mode: "최빈값", std: "표준편차", range: "범위", min: "최솟값", max: "최댓값", q1: "제1사분위수", q3: "제3사분위수" };
   const TRACK_INFO = {
     m1: "두 반 단원평가 비교로 대푯값을 읽고, 전국 중학생 사교육비 분포를 살펴봅니다.",
@@ -47,7 +70,7 @@
   let focused = null;
 
   function fresh() {
-    return { track: null, lesson: 0, idx: 0, diagMode: "two", guideOn: true, collapsed: false, answers: {} };
+    return { track: null, lesson: 0, idx: 0, diagMode: "two", guideOn: true, collapsed: false, answers: {}, inq: {}, interp: {} };
   }
   function load() {
     try {
@@ -83,7 +106,7 @@
   }
   function cards() {
     const all = lessonData().cards;
-    if (S.diagMode === "all") return all;
+    if (FULL || S.diagMode === "all") return all;
     if (S.diagMode === "skip") return all.filter((c) => c.kind !== "diag" && !/^diag_(pre|post)_intro$/.test(c.id));
     const out = [];
     let run = 0;
@@ -110,7 +133,32 @@
     return S.answers[k];
   }
   function tip(c) {
+    if (FULL) return KIND_TIPS[c.kind] ? { info: KIND_TIPS[c.kind] } : {};
     return TIPS[`${S.track}:${c.id}`] || TIPS[c.id] || {};
+  }
+  function inq() {
+    if (!S.inq) S.inq = {};
+    if (!S.inq[S.track]) S.inq[S.track] = {};
+    return S.inq[S.track];
+  }
+  function sample() {
+    return DATA.inquiry ? DATA.inquiry[S.track === "m1" ? "m1" : "high"] : null;
+  }
+  function interps() {
+    if (!S.interp) S.interp = {};
+    if (!S.interp[S.track]) S.interp[S.track] = {};
+    return S.interp[S.track];
+  }
+  function promptsDone(c) {
+    for (const p of c.prompts || []) {
+      const st = promptState(c, p);
+      if (!st.sent) return false;
+      if (needsResubmit(c, p) && !st.resub) return false;
+    }
+    return true;
+  }
+  function connectorTable(key) {
+    return (DATA.connectors && DATA.connectors[key]) || (key === "kosis_private_edu" ? { label: "KOSIS 2025년 저장본", ...DATA.kosis } : null);
   }
 
   function promptState(c, p) {
@@ -131,7 +179,12 @@
   function cardDone(c) {
     const r = rec(c);
     if (c.kind === "diag") return Boolean(r.diag.saved);
-    if (c.kind === "connector") return r.loaded;
+    if (c.kind === "connector" && !r.loaded) return false;
+    if (c.kind === "csv_upload" && c.upload_file && !r.loaded) return false;
+    if (c.kind === "categorize" && !r.mapping) return false;
+    if (c.kind === "career_select" && !inq().question) return false;
+    if (c.kind === "web_table" && !inq().made) return false;
+    if (c.kind === "flexible_analysis" && !r.opened.length) return false;
     for (const p of c.prompts || []) {
       const st = promptState(c, p);
       if (!st.sent) return false;
@@ -143,6 +196,20 @@
   function resultHtml(lesson, key) {
     const res = lesson.results[key];
     if (!res) return "";
+    if (res.client) {
+      const cat = lesson.cards.find((x) => x.kind === "categorize");
+      const mapping = cat ? rec(cat).mapping : null;
+      if (!mapping) return `<p class="muted">앞 카드에서 범주를 먼저 확정해야 이 결과를 계산할 수 있습니다.</p>`;
+      const m = DATA.meal;
+      const src = m.columns.indexOf(cat.source_column);
+      const rows = m.rows.map((r) => r.concat([mapping[String(r[src])] || "기타"]));
+      const out = R.groupStats(rows, m.columns.concat([cat.new_column]), res.args.group_by, res.args.columns, res.args.statistics);
+      return R.render(out, { countLabel: "응답 수" }) + `<p class="muted">내가 확정한 범주로 이 브라우저에서 바로 계산한 결과입니다.</p>`;
+    }
+    if (R) {
+      const rv = findReveal(lesson, key) || {};
+      return R.render(res, { countLabel: rv.count_label || "개수" });
+    }
     const data = res.result && res.result.data ? res.result.data : {};
     if (res.charts && res.charts.length) {
       return `<img src="${res.charts[0]}" alt="${esc(data.alt_text || "에이전트가 그린 그림")}">`;
@@ -159,7 +226,10 @@
     return `<pre>${esc(JSON.stringify(data, null, 2))}</pre>`;
   }
   function findReveal(lesson, key) {
-    for (const c of lesson.cards) for (const r of c.reveals || []) if (r.key === key) return r;
+    for (const c of lesson.cards) {
+      for (const r of c.reveals || []) if (r.key === key) return r;
+      if (c.id === key) return c;
+    }
     return null;
   }
   function tableHtml(head, rows, safe) {
@@ -180,10 +250,159 @@
   }
 
   function sheetHtml(c, lesson) {
-    if (c.side_panel !== "sheet" || !lesson.dataset) return "";
-    const ds = lesson.dataset;
-    const limit = Math.min(ds.rows.length, c.sheet_limit || 60);
-    return `<aside class="sheet"><h3>자료 표 (${ds.rows.length}행)</h3>${tableHtml(ds.columns, ds.rows.slice(0, limit), false)}<p class="muted">${esc(lesson.dataset_source || "")}</p></aside>`;
+    if (c.side_panel !== "sheet") return "";
+    let ds = lesson.dataset;
+    let source = lesson.dataset_source || "";
+    if (c.dataset_from && c.dataset_from.startsWith("connector:")) {
+      const t = connectorTable(c.dataset_from.split(":")[1]);
+      if (t) {
+        ds = t;
+        source = t.label;
+      }
+    }
+    if (!ds) return "";
+    let cols = ds.columns;
+    let rows = ds.rows;
+    if (c.sheet_columns) {
+      const idx = c.sheet_columns.map((x) => ds.columns.indexOf(x)).filter((i) => i >= 0);
+      cols = idx.map((i) => ds.columns[i]);
+      rows = rows.map((r) => idx.map((i) => r[i]));
+    }
+    const limit = Math.min(rows.length, c.sheet_limit || 60);
+    return `<aside class="sheet"><h3>자료 표 (${ds.total || ds.rows.length}행)</h3>${tableHtml(cols, rows.slice(0, limit), false)}<p class="muted">${esc(source)}</p></aside>`;
+  }
+
+  function parseCsv(text) {
+    const lines = String(text || "").replace(/^\ufeff/, "").split(/\r?\n/).filter((l) => l.trim() !== "");
+    return { head: (lines[0] || "").split(","), rows: lines.slice(1).map((l) => l.split(",")) };
+  }
+  function downloadLink(name, text, label) {
+    const url = URL.createObjectURL(new Blob(["\ufeff" + text], { type: "text/csv" }));
+    return `<a class="dl" href="${url}" download="${esc(name)}">${esc(label)}</a>`;
+  }
+
+  function kindHtml(c, lesson) {
+    const r = rec(c);
+    let html = "";
+    if (c.sample) html += `<pre class="sample">${c.sample.map(esc).join("\n")}</pre>`;
+    if (c.checklist) html += `<ul class="checklist">${c.checklist.map((x) => `<li><b>${rich(x.text)}</b> ${rich(x.why || "")}</li>`).join("")}</ul>`;
+    if (c.kind === "sheet" && lesson.dataset) {
+      const ds = lesson.dataset;
+      html += `<div class="sheet-inline">${tableHtml(ds.columns, ds.rows.slice(0, c.sheet_limit || 60), false)}</div><p class="muted">${esc(lesson.dataset_source || "")}, 모두 ${ds.total || ds.rows.length}행</p>`;
+    }
+    if (c.kind === "analysis") {
+      html += `<div class="reveal">${resultHtml(lesson, c.id)}</div>`;
+      if (c.reading) html += `<div class="muted">${c.reading.map((x) => `<p>${rich(x)}</p>`).join("")}</div>`;
+    }
+    if (c.kind === "connector" && c.connector_key !== "kosis_private_edu") {
+      const t = connectorTable(c.connector_key);
+      if (r.loaded && t) {
+        html += `<span class="conn-badge">대체 자료 사용 (체험판: ${esc(t.label)})</span>${tableHtml(t.columns, t.rows, false)}<p class="muted">앞 ${t.rows.length}행만 보입니다. 모두 ${t.total}행입니다.</p>`;
+        if (c.note) html += `<p class="muted">${rich(c.note)}</p>`;
+      } else if (!r.loaded) {
+        html += `<div class="row"><button type="button" class="primary" id="conn-load">자료 불러오기</button></div>`;
+      }
+    }
+    if (c.kind === "column_guess") {
+      const t = connectorTable((c.dataset_from || "").split(":")[1]);
+      if (t) {
+        html += tableHtml(["열 이름", "값 예시"], t.columns.map((col, i) => [col, t.rows.slice(0, 3).map((row) => row[i]).join(", ")]), false);
+      }
+    }
+    if (c.kind === "csv_upload") {
+      (c.downloads || []).forEach((d) => {
+        const text = DATA.assets && DATA.assets[d.file];
+        if (text) html += `<p>${downloadLink(d.file, text, d.label)}</p>`;
+      });
+      if (c.upload_file) {
+        const text = (DATA.assets || {})[c.upload_file] || "";
+        html += `<p class="muted">올릴 파일의 내용(메모장으로 연 모습)</p><pre class="sample">${esc(text)}</pre>`;
+        if (r.loaded) {
+          const t = parseCsv(text);
+          html += `<span class="sent">업로드 성공</span><p class="muted">앱이 읽은 표</p>${tableHtml(t.head, t.rows, false)}`;
+        } else {
+          html += `<div class="row"><button type="button" class="primary" id="csv-load">${esc(c.upload_label || "올려 보기")}</button></div>`;
+        }
+      } else {
+        html += `<div class="row"><input type="file" id="csv-pick" accept=".csv,text/csv"></div><p class="muted">고른 파일은 이 브라우저에서만 읽고 어디에도 보내지 않습니다.</p>`;
+        if (r.picked) html += `<span class="sent">${esc(r.picked.name)}: ${r.picked.rows.length}행</span>${tableHtml(r.picked.head, r.picked.rows.slice(0, 10), false)}`;
+      }
+      if (c.note) html += `<p class="muted">${rich(c.note)}</p>`;
+    }
+    if (c.kind === "categorize") {
+      const sug = DATA.meal.suggest;
+      const map = r.mapping || r.draft || { ...sug };
+      if (!r.draft && !r.mapping) r.draft = map;
+      html += `<p class="muted">메뉴 ${Object.keys(sug).length}개. 에이전트의 제안이 미리 골라져 있습니다.</p><div class="scroll cat-scroll"><table><thead><tr><th>${esc(c.source_column)}</th><th>범주</th></tr></thead><tbody>${Object.keys(sug)
+        .map(
+          (menu) =>
+            `<tr><td>${esc(menu)}</td><td><select data-menu="${esc(menu)}" ${r.mapping ? "disabled" : ""}>${DATA.meal.categories
+              .map((cat) => `<option ${map[menu] === cat ? "selected" : ""}>${esc(cat)}</option>`)
+              .join("")}</select>${map[menu] !== sug[menu] ? ' <span class="tag">바꿈</span>' : ""}</td></tr>`,
+        )
+        .join("")}</tbody></table></div>`;
+      html += r.mapping
+        ? `<div class="row"><span class="sent">✓ 범주를 확정했습니다. 바꾼 메뉴 ${Object.keys(sug).filter((k) => r.mapping[k] !== sug[k]).length}개</span></div>`
+        : `<div class="row"><button type="button" class="primary" id="cat-confirm">범주 확정하기</button></div>`;
+    }
+    if (c.kind === "career_select") {
+      const fields = DATA.careers[S.track === "m1" || S.track === "m3" ? "middle" : "high"];
+      const q = inq();
+      if (q.question) {
+        html += `<div class="reveal"><b>내 탐구 질문</b><p>${esc(q.question)}</p><p class="muted">${esc(q.field || "")}</p></div>`;
+      } else {
+        html += `<div class="career-fields">${fields.map((f, i) => `<button type="button" data-field="${i}" class="${q.fieldIdx === i ? "primary" : ""}">${esc(f.field_name)}</button>`).join("")}</div>`;
+        if (q.fieldIdx !== undefined) {
+          const f = fields[q.fieldIdx];
+          html += `<div class="choices">${f.topics
+            .map((t, i) => `<label class="choice"><input type="radio" name="career-q" value="${i}" ${q.topicIdx === i ? "checked" : ""}> <span>${esc(t.question)} <small class="muted">(${esc(t.related_statistics)})</small></span></label>`)
+            .join("")}</div><div class="row"><button type="button" class="primary" id="career-confirm" ${q.topicIdx === undefined ? "disabled" : ""}>이 질문으로 확정</button></div>`;
+        }
+      }
+    }
+    if (c.kind === "web_table") {
+      const sm = sample();
+      if (sm) {
+        html += `<p class="muted">체험판 예시 자료: ${esc(sm.dataset_name)} (${esc(sm.source)})</p>${tableHtml(sm.table.columns, sm.table.rows, false)}`;
+        html += inq().made ? `<div class="row"><span class="sent">✓ 이 표로 자료를 만들었습니다</span></div>` : `<div class="row"><button type="button" class="primary" id="web-make">이 표로 자료 만들기</button></div>`;
+      }
+    }
+    if (c.kind === "group_share") html += `<p class="muted">${esc(KIND_TIPS.group_share)}</p>`;
+    if (c.kind === "inquiry_check" || c.kind === "presentation") {
+      const sm = sample();
+      const q = inq();
+      if (sm) {
+        html += `<div class="reveal"><b>탐구 질문</b><p>${esc(q.question || sm.question)}</p><b>자료</b><p>${esc(sm.dataset_name)} (${esc(sm.source)}), ${sm.table.rows.length}행</p>${
+          c.kind === "inquiry_check" ? `<b>추천 분석</b><p>${sm.analyses.map((a) => esc(a.label)).join(", ")}</p>` : ""
+        }</div>`;
+        if (!q.question) html += `<p class="muted">5차시에서 질문을 고르지 않아 체험판 예시 질문을 보여 줍니다.</p>`;
+      }
+      if (c.kind === "presentation" && sm) {
+        const saved = sm.analyses.filter((a) => interps()[a.label]);
+        html += saved.length
+          ? saved.map((a) => `<div class="reveal"><b>${esc(a.label)}</b>${R.render(a)}<p>${esc(interps()[a.label])}</p></div>`).join("")
+          : `<p class="muted">6차시에서 저장한 해석이 없습니다. 분석 카드에서 해석을 저장하면 여기에 모입니다.</p>`;
+      }
+    }
+    if (c.kind === "flexible_analysis") {
+      const sm = sample();
+      if (sm) {
+        html += `<p class="muted">탐구 자료: ${esc(sm.dataset_name)}. 추천 분석을 눌러 결과를 엽니다.</p><div class="career-fields">${sm.analyses
+          .map((a, i) => `<button type="button" data-fa="${i}" class="${r.opened.includes(a.label) ? "primary" : ""}">${esc(a.label)}</button>`)
+          .join("")}</div>`;
+        sm.analyses.forEach((a, i) => {
+          if (!r.opened.includes(a.label)) return;
+          const h = a.hints || {};
+          html += `<div class="reveal"><b>${esc(a.label)}</b><p class="muted">${esc(a.description || "")}</p>${R.render(a)}`;
+          if ((h.observations || []).length) html += `<div class="hint"><b>관찰점과 유도 질문</b><ul>${h.observations.slice(0, 2).concat(h.questions || []).slice(0, 4).map((x) => `<li>${esc(x)}</li>`).join("")}</ul></div>`;
+          html += `<textarea data-interp="${i}" placeholder="이 결과에 대한 내 해석">${esc(interps()[a.label] || "")}</textarea><div class="row"><button type="button" data-save-interp="${i}">해석 저장</button>${
+            interps()[a.label] ? '<span class="sent">✓ 저장됨</span>' : ""
+          }</div></div>`;
+        });
+      }
+    }
+    if (c.questions) html += `<div class="muted"><b>생각해 볼 질문</b><ul>${c.questions.map((x) => `<li>${rich(x)}</li>`).join("")}</ul></div>`;
+    return html;
   }
 
   function promptHtml(c, p, i) {
@@ -279,8 +498,9 @@
     }
 
     if (c.kind === "diag") html += diagHtml(c);
+    html += kindHtml(c, lesson);
 
-    if (c.kind === "connector") {
+    if (c.kind === "connector" && c.connector_key === "kosis_private_edu") {
       if (r.loaded) {
         html += `<span class="conn-badge">대체 자료 사용 (체험판: 미리 받아 둔 KOSIS 2025년 표)</span>`;
         html += tableHtml(DATA.kosis.columns, DATA.kosis.rows, false);
@@ -348,6 +568,44 @@
     );
     const conn = $("#conn-load");
     if (conn) conn.addEventListener("click", () => { r.loaded = true; render(); });
+    const csvl = $("#csv-load");
+    if (csvl) csvl.addEventListener("click", () => { r.loaded = true; render(); });
+    const pick = $("#csv-pick");
+    if (pick) pick.addEventListener("change", () => {
+      const f = pick.files && pick.files[0];
+      if (!f) return;
+      const fr = new FileReader();
+      fr.onload = () => { const t = parseCsv(fr.result); r.picked = { name: f.name, head: t.head, rows: t.rows }; render(); };
+      fr.readAsText(f, "utf-8");
+    });
+    document.querySelectorAll("[data-menu]").forEach((el) => el.addEventListener("change", () => { r.draft[el.dataset.menu] = el.value; render(); }));
+    const catc = $("#cat-confirm");
+    if (catc) catc.addEventListener("click", () => { r.mapping = { ...r.draft }; render(); });
+    document.querySelectorAll("[data-field]").forEach((el) => el.addEventListener("click", () => { const q = inq(); q.fieldIdx = Number(el.dataset.field); q.topicIdx = undefined; render(); }));
+    document.querySelectorAll('input[name="career-q"]').forEach((el) => el.addEventListener("change", () => { inq().topicIdx = Number(el.value); render(); }));
+    const cc = $("#career-confirm");
+    if (cc) cc.addEventListener("click", () => {
+      const q = inq();
+      const f = DATA.careers[S.track === "m1" || S.track === "m3" ? "middle" : "high"][q.fieldIdx];
+      q.question = f.topics[q.topicIdx].question;
+      q.field = f.field_name;
+      render();
+    });
+    const wm = $("#web-make");
+    if (wm) wm.addEventListener("click", () => { inq().made = true; render(); });
+    const sm = sample();
+    document.querySelectorAll("[data-fa]").forEach((el) => el.addEventListener("click", () => {
+      const a = sm.analyses[Number(el.dataset.fa)];
+      if (!r.opened.includes(a.label)) r.opened.push(a.label);
+      render();
+    }));
+    document.querySelectorAll("[data-save-interp]").forEach((el) => el.addEventListener("click", () => {
+      const i = Number(el.dataset.saveInterp);
+      const t = document.querySelector(`[data-interp="${i}"]`).value.trim();
+      if (!t) return;
+      interps()[sm.analyses[i].label] = t;
+      render();
+    }));
     if (c.kind === "diag") {
       const d = r.diag;
       document.querySelectorAll('input[name="dc"]').forEach((el) => el.addEventListener("change", () => { d.choice = el.value; save(); renderGuide(); }));
@@ -408,6 +666,19 @@
       if (t.info) task.items.push(t.info);
       return task;
     }
+    const kindStep = {
+      csv_upload: c.upload_file && !r.loaded ? ["파일 내용을 먼저 눈으로 보고, 버튼을 눌러 앱이 이 파일을 어떤 표로 읽는지 확인합니다.", "#csv-load"] : null,
+      categorize: !r.mapping ? ["메뉴마다 고른 범주를 확인하고, 애매한 메뉴는 바꾼 뒤 '범주 확정하기'를 누릅니다.", "#cat-confirm"] : null,
+      career_select: !inq().question ? (inq().fieldIdx === undefined ? ["관심 있는 진로 분야를 하나 고릅니다.", ".career-fields"] : ["질문 후보 하나를 고르고 '이 질문으로 확정'을 누릅니다.", inq().topicIdx === undefined ? ".choices" : "#career-confirm"]) : null,
+      web_table: !inq().made ? ["예시 표를 살펴보고 '이 표로 자료 만들기'를 누릅니다.", "#web-make"] : null,
+      flexible_analysis: !r.opened.length ? ["추천 분석 하나를 눌러 결과를 엽니다. 결과 아래에 해석을 쓰고 저장할 수 있습니다.", "[data-fa]"] : null,
+    }[c.kind];
+    if (kindStep) {
+      task.message = kindStep[0];
+      task.target = kindStep[1];
+      if (t.info) task.items.push(t.info);
+      return task;
+    }
     const ps = c.prompts || [];
     for (let i = 0; i < ps.length; i += 1) {
       const p = ps[i];
@@ -443,7 +714,7 @@
     task.target = "#next";
     if (t.after) task.teacher = { label: "답을 받은 뒤 선생님이 정리하는 말", text: t.after };
     else if (t.ask && !ps.length) task.teacher = { label: "선생님이 묻는 말", text: t.ask };
-    if (t.info && !ps.length) task.items.push(t.info);
+    if (t.info && (!ps.length || FULL)) task.items.push(t.info);
     return task;
   }
 
@@ -516,7 +787,37 @@
     renderGuide();
   }
 
+  function welcomeFull() {
+    dialog(
+      `<h2>정규 차시 체험판</h2>
+      <p>학교급별 네 과정의 정규 차시(5차시, 7차시) 학생 화면을 그대로 옮겼습니다. 로그인이나 서버 없이 이 브라우저 안에서만 돌아가며, 쓴 답은 어디에도 보내지 않습니다.</p>
+      <ol>
+        <li>1~4차시는 개념 차시입니다. 예측을 보내야 결과가 열리고, 결과를 본 뒤 생각을 다시 씁니다.</li>
+        <li>5~7차시는 탐구 프로젝트입니다. 체험판에서는 예시 자료로 질문 고르기, 분석, 발표 정리까지 해 볼 수 있습니다.</li>
+        <li>오른쪽 아래 <b>안내</b>가 다음에 할 일을 알려 줍니다.</li>
+      </ol>
+      <div class="track-pick">${Object.entries(DATA.tracks)
+        .map(([k, t]) => `<button type="button" data-track="${k}"><b>${esc(t.label)}</b><small>${esc(FULL_INFO[k] || "")}</small></button>`)
+        .join("")}</div>
+      <div class="opt">시작할 차시: <select id="lesson-pick">${[1, 2, 3, 4, 5, 6, 7].map((n) => `<option value="${n - 1}">${n}차시</option>`).join("")}</select></div>`,
+      (root) => {
+        root.querySelectorAll("[data-track]").forEach((b) =>
+          b.addEventListener("click", () => {
+            const n = DATA.tracks[b.dataset.track].lessons.length;
+            const keep = { inq: S.inq, interp: S.interp, answers: S.answers };
+            S = { ...fresh(), ...keep };
+            S.track = b.dataset.track;
+            S.lesson = Math.min(Number(root.querySelector("#lesson-pick").value), n - 1);
+            closeDialog();
+            render();
+          }),
+        );
+      },
+    );
+  }
+
   function welcome() {
+    if (FULL) return welcomeFull();
     dialog(
       `<h2>통계 에이전트 체험판</h2>
       <p>2026년 실험수업(2차시)에 쓴 학생 화면을 그대로 옮겼습니다. 로그인이나 서버 없이 이 브라우저 안에서만 돌아가며, 쓴 답은 어디에도 보내지 않습니다.</p>
@@ -575,12 +876,16 @@
     if (!last) {
       dialog(
         `<h2>${S.lesson + 1}차시를 마쳤습니다</h2><p>이번 차시에 쓴 답입니다. 실제 수업에서는 이 기록이 선생님의 응답 보드와 수업 뒤 개인 리포트로 이어집니다.</p>${lessonSummary()}
-        <div class="row"><button type="button" class="primary" id="go-next">2차시 시작</button></div>`,
-        (root) => root.querySelector("#go-next").addEventListener("click", () => { S.lesson += 1; S.idx = 0; closeDialog(); render(); }),
+        <div class="row"><button type="button" class="primary" id="go-next">${S.lesson + 2}차시 시작</button>${FULL ? '<button type="button" id="go-pick">다른 차시 고르기</button>' : ""}</div>`,
+        (root) => {
+          root.querySelector("#go-next").addEventListener("click", () => { S.lesson += 1; S.idx = 0; closeDialog(); render(); });
+          const gp = root.querySelector("#go-pick");
+          if (gp) gp.addEventListener("click", () => welcome());
+        },
       );
     } else {
       dialog(
-        `<h2>체험을 마쳤습니다</h2><p>두 차시 동안 쓴 답입니다. 처음 예측과 결과를 본 뒤의 생각이 어떻게 달라졌는지 견주어 보세요.</p>${lessonSummary(DATA.tracks[S.track].lessons.map((_, i) => i))}
+        `<h2>체험을 마쳤습니다</h2><p>${FULL ? "모든 차시를 마쳤습니다. 차시마다 쓴 답입니다." : "두 차시 동안 쓴 답입니다."} 처음 예측과 결과를 본 뒤의 생각이 어떻게 달라졌는지 견주어 보세요.</p>${lessonSummary(DATA.tracks[S.track].lessons.map((_, i) => i))}
         <p class="muted">이 체험판은 학생 화면만 보여 줍니다. 실제 앱에는 교사 진행 화면(학생 화면 모으기, 결과 공개, 응답 보드)과 학급 코드와 PIN 로그인이 있습니다.</p>
         <div class="row"><button type="button" class="primary" id="go-other">다른 과정 체험하기</button></div>`,
         (root) => root.querySelector("#go-other").addEventListener("click", () => welcome()),
