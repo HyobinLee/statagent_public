@@ -253,3 +253,13 @@ body.hub { padding-bottom: 3rem; }
 .hub-card h3 { margin: 0.5rem 0 0.4rem; }
 .hub-card p { margin: 0; color: var(--muted); }
 .cat-scroll th, .cat-scroll td { text-align: left; }
+
+.btn-link { display: inline-flex; align-items: center; gap: 0.3rem; border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem 0.9rem; color: var(--text); text-decoration: none; white-space: nowrap; background: transparent; }
+.btn-link::before { content: "⌂"; color: var(--accent); }
+.btn-link:hover, .btn-link:focus { border-color: var(--accent); color: var(--accent); }
+.btn-link .lbl-short { display: none; }
+@media (max-width: 760px) {
+  .btn-link { padding: 0.3rem 0.55rem; font-size: 0.85rem; }
+  .btn-link .lbl-full { display: none; }
+  .btn-link .lbl-short { display: inline; }
+}
