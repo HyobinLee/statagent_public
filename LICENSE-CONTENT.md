@@ -14,6 +14,7 @@
 | `lessons/backend/lessons_app/data/lesson_defs.json` | 기본 차시 정의 |
 | `lessons/backend/lessons_app/data/career_fields*.json` | 진로 분야별 탐구 질문 후보 |
 | `lessons/frontend/assets/` | 진단 문항 그림, 수업용 예시 CSV |
+| `demo/demo_data.js` | 체험판 자료(카드 글, 미리 계산한 결과 표와 그림) |
 | `backend/app/ai/*.md` | 탐구 질문 안내 프롬프트 |
 | 수업용 예시 자료 CSV | 두 반 성적, 방과후 수학, 급식 설문, 학급 문고, 용돈, 종목 투표처럼 수업을 위해 만든 자료 |
 
